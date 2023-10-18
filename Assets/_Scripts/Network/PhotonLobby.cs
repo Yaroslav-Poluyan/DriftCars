@@ -1,10 +1,7 @@
-﻿using System;
-using _Scripts.SceneManagement;
+﻿using _Scripts.SceneManagement;
 using Photon.Pun;
-using Photon.Realtime;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Zenject;
 
 namespace _Scripts.Network
@@ -44,12 +41,12 @@ namespace _Scripts.Network
             RefreshInfo();
         }
 
-        public override void OnPlayerEnteredRoom(Player newPlayer)
+        public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
         {
             RefreshInfo();
         }
 
-        public override void OnPlayerLeftRoom(Player otherPlayer)
+        public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
         {
             RefreshInfo();
         }
