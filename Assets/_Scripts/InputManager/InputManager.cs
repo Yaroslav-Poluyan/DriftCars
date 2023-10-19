@@ -5,13 +5,14 @@ namespace _Scripts.InputManager
 {
     public class InputManager : MonoBehaviour
     {
-        public float HorizontalInput { get; private set; }
-        public float VerticalInput { get; private set; }
-
-        private void Update()
+        public float GetHorizontalInput()
         {
-            /*HorizontalInput = Input.GetAxis("Horizontal");
-            VerticalInput = Input.GetAxis("Vertical");*/
+            return Input.GetAxis("Horizontal");
+        }
+
+        public float GetVerticalInput()
+        {
+            return Input.GetAxis("Vertical");
         }
     }
 }

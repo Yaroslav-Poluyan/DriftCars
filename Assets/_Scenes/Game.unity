@@ -1188,7 +1188,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1403906544}
-  m_LocalRotation: {x: 0.2246626, y: -0.000000018745544, z: 0.000000004321905, w: 0.97443664}
+  m_LocalRotation: {x: 0.2246626, y: 0.00000001874555, z: -0.0000000043219064, w: 0.97443664}
   m_LocalPosition: {x: -52.48, y: 4.87, z: -8.720001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1340,7 +1340,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640523927}
-  m_LocalRotation: {x: 0.2246626, y: -0.000000018745544, z: 0.000000004321905, w: 0.97443664}
+  m_LocalRotation: {x: 0.2246626, y: 0.00000001874555, z: -0.0000000043219064, w: 0.97443664}
   m_LocalPosition: {x: -52.48, y: 4.87, z: -8.720001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3385,7 +3385,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8537791508793818855}
-  - component: {fileID: 8537791508803653895}
   - component: {fileID: 1956277437786577262}
   - component: {fileID: 1956277437786577257}
   - component: {fileID: 1956277437786577261}
@@ -3777,26 +3776,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8537791508794303181}
   m_Mesh: {fileID: 4300004, guid: 6cc031a77f676ac448bc392ea683c4ae, type: 3}
---- !u!95 &8537791508803653895
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8537791508794303175}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 6cc031a77f676ac448bc392ea683c4ae, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
 --- !u!33 &8864468616698424557
 MeshFilter:
   m_ObjectHideFlags: 0

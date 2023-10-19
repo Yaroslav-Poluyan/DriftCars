@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace _Scripts.Truck
 {
@@ -47,6 +49,8 @@ namespace _Scripts.Truck
         private float _clutch;
         private float _wheelRpm;
         [Inject] private InputManager.InputManager _inputManager;
+        private const float SteeringSpeed = 50f;
+        private const float MaxSteerAngle = 60f;
 
         public WheelColliders Colliders => _colliders;
 
@@ -71,9 +75,8 @@ namespace _Scripts.Truck
 
         private void CheckInput()
         {
-            _gasInput = Input.GetAxis("Vertical");
-            _steeringInput = Input.GetAxis("Horizontal");
-            print("Gas input: " + _gasInput + " Steering input: " + _steeringInput);
+            _gasInput = _inputManager.GetVerticalInput();
+            _steeringInput = _inputManager.GetHorizontalInput();
             if (Mathf.Abs(_gasInput) > 0 && _isEngineRunning == 0)
             {
                 StartCoroutine(StartEngine());
@@ -188,9 +191,10 @@ namespace _Scripts.Truck
                     Vector3.SignedAngle(transform.forward, _playerRb.velocity + transform.forward, Vector3.up);
             }
 
-            steeringAngle = Mathf.Clamp(steeringAngle, -90f, 90f);
-            Colliders._frWheel.steerAngle = steeringAngle;
-            Colliders._flWheel.steerAngle = steeringAngle;
+            steeringAngle = Mathf.Clamp(steeringAngle, -MaxSteerAngle, MaxSteerAngle);
+            //lerp
+            Colliders._frWheel.steerAngle = Mathf.Lerp(Colliders._frWheel.steerAngle, steeringAngle, Time.deltaTime * SteeringSpeed);
+            Colliders._flWheel.steerAngle = Mathf.Lerp(Colliders._flWheel.steerAngle, steeringAngle, Time.deltaTime * SteeringSpeed);
         }
 
         private void ApplyWheelPositions()
