@@ -9,7 +9,7 @@ namespace _Scripts.Zenject
         
         public override void InstallBindings()
         {
-            Container.Bind<InputManager.InputManager>().FromInstance(_inputManager).AsSingle();
+            Container.Bind<InputManager.InputManager>().FromInstance(_inputManager).AsSingle().NonLazy();
         }
     }
 }
