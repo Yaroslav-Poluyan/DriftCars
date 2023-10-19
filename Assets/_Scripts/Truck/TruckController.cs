@@ -92,6 +92,7 @@ namespace _Scripts.Truck
         {
             if (Pause.IsPaused)
             {
+                ForceBreak();
                 return;
             }
 
@@ -104,6 +105,14 @@ namespace _Scripts.Truck
             CheckDrift();
             _truckEffects.CheckParticles();
             ApplyWheelPositions();
+        }
+
+        private void ForceBreak()
+        { 
+            Colliders._frWheel.brakeTorque = 1000f;
+            Colliders._flWheel.brakeTorque = 1000f;
+            Colliders._rrWheel.brakeTorque = 1000f;
+            Colliders._rlWheel.brakeTorque = 1000f;
         }
 
         private void CheckDrift()

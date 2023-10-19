@@ -10,7 +10,7 @@ namespace _Scripts.Managers
     {
         [SerializeField] private TextMeshProUGUI _timerText;
         [SerializeField] private float _beforeStartTimer = 3f;
-        [SerializeField] private float _gameTimer = 20f;
+        [SerializeField] private float _gameTimer = 120f;
         private PhotonView _photonView;
         private Coroutine _timerCoroutine;
 
