@@ -90,10 +90,9 @@ namespace _Scripts.Truck
 
         private void Update()
         {
-            if (!_isLocalPlayer) return;
             _speed = Colliders._rrWheel.rpm * Colliders._rrWheel.radius * 2f * Mathf.PI / 10f;
             _speedClamped = Mathf.Lerp(_speedClamped, _speed, Time.deltaTime);
-            CheckInput();
+            CheckLocalInput();
             ApplyMotor();
             ApplySteering();
             ApplyBrake();
@@ -124,10 +123,26 @@ namespace _Scripts.Truck
             }
         }
 
-        private void CheckInput()
+        [PunRPC]
+        private void ReceiveInput(float gasInput, float brakeInput, float steeringInput)
         {
+            _gasInput = gasInput;
+            _brakeInput = brakeInput;
+            _steeringInput = steeringInput;
+            MoveTruck();
+        }
+
+        private void CheckLocalInput()
+        {
+            if (!_isLocalPlayer) return;
             _gasInput = _inputManager.GetVerticalInput();
             _steeringInput = _inputManager.GetHorizontalInput();
+            _photonView.RPC(nameof(ReceiveInput), RpcTarget.Others, _gasInput, _brakeInput, _steeringInput);
+            MoveTruck();
+        }
+
+        private void MoveTruck()
+        {
             if (Mathf.Abs(_gasInput) > 0 && _isEngineRunning == 0)
             {
                 StartCoroutine(StartEngine());
