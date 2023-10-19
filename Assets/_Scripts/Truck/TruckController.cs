@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using _Scripts.Managers;
+using Photon.Pun;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -14,7 +16,7 @@ namespace _Scripts.Truck
         Changing
     };
 
-    public class TruckController : MonoBehaviour
+    public class TruckController : MonoBehaviourPunCallbacks
     {
         [SerializeField] private EngineAudio _engineAudio;
         [SerializeField] private TruckEffects _truckEffects;
@@ -31,14 +33,25 @@ namespace _Scripts.Truck
         [SerializeField] private float _slipAngle;
         [SerializeField] private float _increaseGearRpm;
         [SerializeField] private float _decreaseGearRpm;
-
         [SerializeField] private float _changeGearTime = 0.5f;
+
+        #region Drift
+
+        [SerializeField] private float _driftAngleMin = 30f;
+        [SerializeField] private float _driftScoreFactor = 1f;
+        private float _currentDriftScore;
+        private bool _isDrifting = false;
+        private DriftManager _driftManager;
+
+        #endregion
 
         //
         [SerializeField] private int _currentGear;
         [SerializeField] private float _speed;
         [SerializeField] private int _isEngineRunning;
         [SerializeField] private GearState _gearState;
+        private const float SteeringSpeed = 50f;
+        private const float MaxSteerAngle = 60f;
         private float _rpm;
         private Rigidbody _playerRb;
         private float _gasInput;
@@ -48,29 +61,67 @@ namespace _Scripts.Truck
         private float _currentTorque;
         private float _clutch;
         private float _wheelRpm;
-        [Inject] private InputManager.InputManager _inputManager;
-        private const float SteeringSpeed = 50f;
-        private const float MaxSteerAngle = 60f;
+        private PhotonView _photonView;
+        private InputManager.InputManager _inputManager;
+        private float _minMagnitudeForDrift = 10f;
 
         public WheelColliders Colliders => _colliders;
 
+        #region Network
 
-        // Start is called before the first frame update
-        private void Start()
+        private bool _isLocalPlayer;
+
+        public void SetPlayerId(int playerActorNumber)
         {
+            _photonView.OwnerActorNr = playerActorNumber;
+            _photonView.ControllerActorNr = playerActorNumber;
+            _isLocalPlayer = _photonView.IsMine;
+        }
+
+        #endregion
+
+        public void Initialize(DriftManager driftManager, InputManager.InputManager inputManager)
+        {
+            _inputManager = inputManager;
+            _driftManager = driftManager;
+            _photonView = GetComponent<PhotonView>();
             _playerRb = gameObject.GetComponent<Rigidbody>();
         }
 
         private void Update()
         {
+            if (!_isLocalPlayer) return;
             _speed = Colliders._rrWheel.rpm * Colliders._rrWheel.radius * 2f * Mathf.PI / 10f;
             _speedClamped = Mathf.Lerp(_speedClamped, _speed, Time.deltaTime);
             CheckInput();
             ApplyMotor();
             ApplySteering();
             ApplyBrake();
+            CheckDrift();
             _truckEffects.CheckParticles();
             ApplyWheelPositions();
+        }
+
+        private void CheckDrift()
+        {
+            print("isDrifting: " + _isDrifting);
+            if (_slipAngle > _driftAngleMin &&
+                _playerRb.velocity.magnitude >= _minMagnitudeForDrift)
+            {
+                if (!_isDrifting)
+                {
+                    _isDrifting = true;
+                }
+
+                var points = _slipAngle * _driftScoreFactor;
+                _currentDriftScore += points;
+            }
+            else
+            {
+                _isDrifting = false;
+                _driftManager.AddDriftPoints(_photonView.OwnerActorNr, _currentDriftScore);
+                _currentDriftScore = 0;
+            }
         }
 
         private void CheckInput()
@@ -193,8 +244,10 @@ namespace _Scripts.Truck
 
             steeringAngle = Mathf.Clamp(steeringAngle, -MaxSteerAngle, MaxSteerAngle);
             //lerp
-            Colliders._frWheel.steerAngle = Mathf.Lerp(Colliders._frWheel.steerAngle, steeringAngle, Time.deltaTime * SteeringSpeed);
-            Colliders._flWheel.steerAngle = Mathf.Lerp(Colliders._flWheel.steerAngle, steeringAngle, Time.deltaTime * SteeringSpeed);
+            Colliders._frWheel.steerAngle = Mathf.Lerp(Colliders._frWheel.steerAngle, steeringAngle,
+                Time.deltaTime * SteeringSpeed);
+            Colliders._flWheel.steerAngle = Mathf.Lerp(Colliders._flWheel.steerAngle, steeringAngle,
+                Time.deltaTime * SteeringSpeed);
         }
 
         private void ApplyWheelPositions()
@@ -258,7 +311,7 @@ namespace _Scripts.Truck
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class WheelColliders
     {
         public WheelCollider _frWheel;
@@ -267,7 +320,7 @@ namespace _Scripts.Truck
         public WheelCollider _rlWheel;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class WheelMeshes
     {
         public MeshRenderer _frWheel;
@@ -276,7 +329,7 @@ namespace _Scripts.Truck
         public MeshRenderer _rlWheel;
     }
 
-    [System.Serializable] 
+    [Serializable]
     public class WheelParticles
     {
         public ParticleSystem _frWheel;
