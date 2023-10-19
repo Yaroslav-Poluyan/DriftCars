@@ -90,6 +90,11 @@ namespace _Scripts.Truck
 
         private void Update()
         {
+            if (Pause.IsPaused)
+            {
+                return;
+            }
+
             _speed = Colliders._rrWheel.rpm * Colliders._rrWheel.radius * 2f * Mathf.PI / 10f;
             _speedClamped = Mathf.Lerp(_speedClamped, _speed, Time.deltaTime);
             CheckLocalInput();

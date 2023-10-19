@@ -42,6 +42,9 @@ MonoBehaviour:
   - RPC_AddDriftPoints
   - InitializeTruck
   - ReceiveInput
+  - StartTimerRPC
+  - StartGameTimerRPC
+  - StartInLaunchTimerRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0
