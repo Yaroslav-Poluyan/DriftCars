@@ -22,6 +22,16 @@ namespace _Scripts.Network
         {
             _createRoomButton.onClick.AddListener(CreateRoom);
             _joinRoomButton.onClick.AddListener(JoinRoom);
+            if (ES3.KeyExists("PlayerName"))
+            {
+                PhotonNetwork.NickName = ES3.Load<string>("PlayerName");
+                _playerNameInputField.text = PhotonNetwork.NickName;
+            }
+            else
+            {
+                PhotonNetwork.NickName = "Player" + UnityEngine.Random.Range(0, 1000);
+                _playerNameInputField.text = PhotonNetwork.NickName;
+            }
         }
 
         private void CreateRoom()
@@ -44,6 +54,7 @@ namespace _Scripts.Network
         private void JoinRoom()
         {
             PhotonNetwork.NickName = _playerNameInputField.text;
+            ES3.Save("PlayerName", PhotonNetwork.NickName);
             var roomName = _joinRoomNameInputField.text;
             if (string.IsNullOrEmpty(roomName))
             {

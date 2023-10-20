@@ -1,0 +1,27 @@
+{
+	"TruckUpgrades" : {
+		"__type" : "System.Collections.Generic.List`1[[System.ValueTuple`4[[_Scripts.Truck.TruckUpgradeManager+Slot, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],mscorlib",
+		"value" : [
+			{
+				"Item1" : 0,
+				"Item2" : 0,
+				"Item3" : true,
+				"Item4" : true
+			},{
+				"Item1" : 1,
+				"Item2" : 0,
+				"Item3" : false,
+				"Item4" : true
+			},{
+				"Item1" : 1,
+				"Item2" : 1,
+				"Item3" : true,
+				"Item4" : true
+			}
+		]
+	},
+	"PlayerName" : {
+		"__type" : "string",
+		"value" : "Player962"
+	}
+}

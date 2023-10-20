@@ -1,4 +1,6 @@
-﻿using _Scripts.ScriptableObjects;
+﻿using System;
+using _Scripts.ScriptableObjects;
+using Photon.Pun;
 using UnityEngine;
 
 namespace _Scripts.Managers
@@ -6,6 +8,11 @@ namespace _Scripts.Managers
     public class PlayerResourcesManager : MonoBehaviour
     {
         [SerializeField] private PlayerResourcesData _playerResourcesData;
+
+        private void Awake()
+        {
+            UpdatePlayerScore(TotalDriftScore);
+        }
 
         private float Money
         {
@@ -16,7 +23,20 @@ namespace _Scripts.Managers
         private float TotalDriftScore
         {
             get => _playerResourcesData._totalDriftScore;
-            set => _playerResourcesData._totalDriftScore = value;
+            set
+            {
+                _playerResourcesData._totalDriftScore = value;
+                UpdatePlayerScore(value);
+            }
+        }
+
+        private static void UpdatePlayerScore(float score)
+        {
+            var customProperties = new ExitGames.Client.Photon.Hashtable
+            {
+                ["score"] = score
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(customProperties);
         }
 
         public void AddMoney(float money)

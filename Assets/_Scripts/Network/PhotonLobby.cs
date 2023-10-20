@@ -21,34 +21,45 @@ namespace _Scripts.Network
             RefreshInfo();
         }
 
+        private void CheckForButtons()
+        {
+            _startGameButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+        }
+
         public override void OnJoinedRoom()
         {
             RefreshInfo();
+            CheckForButtons();
         }
 
         public override void OnJoinedLobby()
         {
             RefreshInfo();
+            CheckForButtons();
         }
 
         public override void OnLeftLobby()
         {
             RefreshInfo();
+            CheckForButtons();
         }
 
         public override void OnLeftRoom()
         {
             RefreshInfo();
+            CheckForButtons();
         }
 
         public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
         {
             RefreshInfo();
+            CheckForButtons();
         }
 
         public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
         {
             RefreshInfo();
+            CheckForButtons();
         }
 
         private void RefreshInfo()

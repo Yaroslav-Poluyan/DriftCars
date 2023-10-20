@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerResources
   m_EditorClassIdentifier: 
   _money: 100000
-  _totalDriftScore: 0
+  _totalDriftScore: 1576

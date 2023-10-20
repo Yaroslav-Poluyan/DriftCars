@@ -1,4 +1,5 @@
-﻿using _Scripts.SceneManagement;
+﻿using System.Data;
+using _Scripts.SceneManagement;
 using Photon.Pun;
 using UnityEngine;
 using Zenject;
@@ -19,6 +20,7 @@ namespace _Scripts.Network
         {
             PhotonNetwork.GameVersion = _gameVersion;
             PhotonNetwork.AutomaticallySyncScene = true;
+            if (Application.internetReachability == NetworkReachability.NotReachable) PhotonNetwork.OfflineMode = true;
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.ConnectToRegion(_region);
         }

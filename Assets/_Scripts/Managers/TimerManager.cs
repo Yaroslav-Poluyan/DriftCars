@@ -9,6 +9,7 @@ namespace _Scripts.Managers
     public class TimerManager : MonoBehaviourPunCallbacks
     {
         [SerializeField] private TextMeshProUGUI _timerText;
+        [SerializeField] private TextMeshProUGUI _startTimerText;
         [SerializeField] private float _beforeStartTimer = 3f;
         [SerializeField] private float _gameTimer = 120f;
         private PhotonView _photonView;
@@ -18,8 +19,9 @@ namespace _Scripts.Managers
         {
             _photonView = GetComponent<PhotonView>();
             if (PhotonNetwork.IsMasterClient)
-            { 
-                StartCoroutine(StartTimer(_beforeStartTimer, "GO!", TimerStartInitialization, TimerStartCompletion));
+            {
+                StartCoroutine(StartTimer(_startTimerText, _beforeStartTimer, "GO!", TimerStartInitialization,
+                    TimerStartCompletion));
             }
         }
 
@@ -39,9 +41,10 @@ namespace _Scripts.Managers
         {
             Pause.IsPaused = false;
             _photonView.RPC(nameof(RPCTimerStartCompleted), RpcTarget.Others);
-            if (PhotonNetwork.IsMasterClient) 
+            if (PhotonNetwork.IsMasterClient)
             {
-                StartCoroutine(StartTimer(_gameTimer, "end", GameTimerStartInitialization, GameTimerStartCompletion));
+                StartCoroutine(StartTimer(_timerText, _gameTimer, "end", GameTimerStartInitialization,
+                    GameTimerStartCompletion));
             }
         }
 
@@ -75,22 +78,23 @@ namespace _Scripts.Managers
             print("Game ended");
         }
 
-        private IEnumerator StartTimer(float time, string onendMessage, Action onTimerStart, Action onTimerEnd)
+        private IEnumerator StartTimer(TextMeshProUGUI timerText, float time, string onendMessage, Action onTimerStart,
+            Action onTimerEnd)
         {
             var timer = time;
-            _timerText.gameObject.SetActive(true);
+            timerText.gameObject.SetActive(true);
             onTimerStart?.Invoke();
             while (timer > 0)
             {
                 timer -= Time.deltaTime;
-                _timerText.text = timer.ToString("F2");
+                timerText.text = timer.ToString("F2");
                 yield return null;
             }
 
             onTimerEnd?.Invoke();
-            _timerText.text = onendMessage;
+            timerText.text = onendMessage;
             yield return new WaitForSeconds(1f);
-            _timerText.gameObject.SetActive(false);
+            timerText.gameObject.SetActive(false);
         }
     }
 }
