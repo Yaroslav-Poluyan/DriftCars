@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Managers;
+using Photon.Pun;
 using UnityEngine;
 
 namespace _Scripts.Truck
@@ -36,11 +37,16 @@ namespace _Scripts.Truck
 
         [SerializeField] private List<PartsOfTypeContainer> _truckUpgrades = new();
         [SerializeField] private List<MeshRenderer> _forColoring = new();
+        [SerializeField] private PhotonView _photonView;
         private PlayerResourcesManager _playerResourcesManager;
 
-        private void Awake()
+        private void Start()
         {
-            Load();
+            var updates = Load();
+            if (updates != null)
+            {
+                UpdateCarState(updates);
+            }
         }
 
         public void Initialize(PlayerResourcesManager playerResourcesManager)
@@ -75,9 +81,16 @@ namespace _Scripts.Truck
         private void ImplementUpgrade(Slot slot, int upgradeIndex)
         {
             List<Part> upgrades;
-            var part = _truckUpgrades.FirstOrDefault(x => x._slot == slot)?._parts[upgradeIndex];
+            var partsOfSlot = _truckUpgrades.FirstOrDefault(x => x._slot == slot)?._parts;
+            var part = partsOfSlot?[upgradeIndex];
             if (part != null)
             {
+                //set not installed for all parts of this type
+                foreach (var partOfType in partsOfSlot)
+                {
+                    partOfType._isInstalled = false;
+                }
+
                 part._isInstalled = true;
                 Save();
             }
@@ -132,6 +145,11 @@ namespace _Scripts.Truck
 
         private void Save()
         {
+            if (PhotonNetwork.InRoom)
+            {
+                if (!_photonView.IsMine) return;
+            }
+
             var statesList = new List<(Slot slot, int level, bool isInstalled, bool isBought)>();
             foreach (var partsOfTypeContainer in _truckUpgrades)
             {
@@ -145,9 +163,9 @@ namespace _Scripts.Truck
             ES3.Save("TruckUpgrades", statesList);
         }
 
-        private void Load()
+        private List<(Slot slot, int level, bool isInstalled, bool isBought)> Load()
         {
-            if (!ES3.KeyExists("TruckUpgrades")) return;
+            if (!ES3.KeyExists("TruckUpgrades")) return null;
             var statesList = ES3.Load("TruckUpgrades",
                 new List<(Slot slot, int level, bool isInstalled, bool isBought)>());
             foreach (var partsOfTypeContainer in _truckUpgrades)
@@ -169,6 +187,74 @@ namespace _Scripts.Truck
                     }
                 }
             }
+
+            return statesList;
+        }
+
+        private void ImplementUpgrades(List<(Slot slot, int level, bool isInstalled, bool isBought)> values)
+        {
+            foreach (var truckUpgrade in _truckUpgrades)
+            {
+                foreach (var part in truckUpgrade._parts)
+                {
+                    var state = values.FirstOrDefault(x =>
+                        x.slot == truckUpgrade._slot &&
+                        x.level == Array.IndexOf(truckUpgrade._parts, part));
+                    if (state != default)
+                    {
+                        part._isInstalled = state.isInstalled;
+                        part._isBought = state.isBought;
+                        if (part._isInstalled)
+                        {
+                            ImplementUpgrade(truckUpgrade._slot,
+                                Array.IndexOf(truckUpgrade._parts, part));
+                        }
+                    }
+                }
+            }
+        }
+
+        private void UpdateCarState(List<(Slot slot, int level, bool isInstalled, bool isBought)> values)
+        {
+            var objects = values
+                .Select(value => $"{(int) value.slot},{value.level},{value.isInstalled},{value.isBought}").ToArray();
+            // if is in room
+            if (PhotonNetwork.InRoom && _photonView.IsMine)
+            {
+                _photonView.RPC(nameof(UpdateCarStateOnClients), RpcTarget.Others, new object[] {objects},
+                    _photonView.ViewID);
+            }
+        }
+
+        [PunRPC]
+        private void UpdateCarStateOnClients(object[] valuesArray, int viewID)
+        {
+            if (_photonView.ViewID != viewID) return;
+            var values = new List<(Slot slot, int level, bool isInstalled, bool isBought)>();
+
+            foreach (var valuesObj in valuesArray)
+            {
+                var parts = (string[]) valuesObj;
+                foreach (var part in parts)
+                {
+                    var stringData = part.Split(',');
+                    var slot = (Slot) int.Parse(stringData[0]);
+                    var level = int.Parse(stringData[1]);
+                    var isInstalled = bool.Parse(stringData[2]);
+                    var isBought = bool.Parse(stringData[3]);
+                    values.Add((slot, level, isInstalled, isBought));
+                }
+            }
+
+            var parentTruckController = GetComponentInParent<TruckController>();
+            Debug.LogError("UpdateCarStateOnClients recieved values for " +
+                           parentTruckController.name);
+            var log = values.Aggregate("Values: ", (current, value) =>
+                current +
+                $"Slot: \n {value.slot} \n Level: {value.level} \n IsInstalled: {value.isInstalled} \n IsBought: {value.isBought} \n");
+            Debug.LogError(log);
+            // Update local state
+            ImplementUpgrades(values);
         }
     }
 }

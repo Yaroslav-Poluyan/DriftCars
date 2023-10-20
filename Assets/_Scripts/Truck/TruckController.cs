@@ -62,7 +62,7 @@ namespace _Scripts.Truck
         private float _currentTorque;
         private float _clutch;
         private float _wheelRpm;
-        private PhotonView _photonView;
+        public PhotonView _photonView;
         private InputManager.InputManager _inputManager;
         private float _minMagnitudeForDrift = 10f;
 
@@ -76,9 +76,15 @@ namespace _Scripts.Truck
 
         public void SetPlayerId(int playerActorNumber)
         {
-            _photonView.OwnerActorNr = playerActorNumber;
-            _photonView.ControllerActorNr = playerActorNumber;
+            var allViews = GetComponentsInChildren<PhotonView>();
+            foreach (var view in allViews)
+            {
+                view.OwnerActorNr = playerActorNumber;
+                view.ControllerActorNr = playerActorNumber;
+            }
+
             _isLocalPlayer = _photonView.IsMine;
+            Debug.LogError($"SetPlayerId owner: {playerActorNumber} to truck name: {gameObject.name}");
         }
 
         #endregion
@@ -111,7 +117,7 @@ namespace _Scripts.Truck
         }
 
         private void ForceBreak()
-        { 
+        {
             Colliders._frWheel.brakeTorque = 1000f;
             Colliders._flWheel.brakeTorque = 1000f;
             Colliders._rrWheel.brakeTorque = 1000f;
@@ -120,7 +126,6 @@ namespace _Scripts.Truck
 
         private void CheckDrift()
         {
-            print("isDrifting: " + _isDrifting);
             if (_slipAngle > _driftAngleMin &&
                 PlayerRb.velocity.magnitude >= _minMagnitudeForDrift)
             {
@@ -151,7 +156,10 @@ namespace _Scripts.Truck
 
         private void CheckLocalInput()
         {
-            if (!_isLocalPlayer) return;
+            if (!_isLocalPlayer)
+            {
+                return;
+            }
             _gasInput = _inputManager.GetVerticalInput();
             _steeringInput = _inputManager.GetHorizontalInput();
             _photonView.RPC(nameof(ReceiveInput), RpcTarget.Others, _gasInput, _brakeInput, _steeringInput);

@@ -18,48 +18,61 @@ namespace _Scripts.Managers
         {
             _photonView = GetComponent<PhotonView>();
             if (PhotonNetwork.IsMasterClient)
+            { 
+                StartCoroutine(StartTimer(_beforeStartTimer, "GO!", TimerStartInitialization, TimerStartCompletion));
+            }
+        }
+
+        private void TimerStartInitialization()
+        {
+            Pause.IsPaused = true;
+            _photonView.RPC(nameof(RPCTimerStart), RpcTarget.Others);
+        }
+
+        [PunRPC]
+        private void RPCTimerStart()
+        {
+            Pause.IsPaused = true;
+        }
+
+        private void TimerStartCompletion()
+        {
+            Pause.IsPaused = false;
+            _photonView.RPC(nameof(RPCTimerStartCompleted), RpcTarget.Others);
+            if (PhotonNetwork.IsMasterClient) 
             {
-                _photonView.RPC(nameof(StartInLaunchTimerRPC), RpcTarget.All, _beforeStartTimer);
+                StartCoroutine(StartTimer(_gameTimer, "end", GameTimerStartInitialization, GameTimerStartCompletion));
             }
         }
 
         [PunRPC]
-        private void StartInLaunchTimerRPC(float time)
+        private void RPCTimerStartCompleted()
         {
-            if (_timerCoroutine != null) StopCoroutine(_timerCoroutine);
-            _timerCoroutine = null;
-            _timerCoroutine = StartCoroutine(StartTimer(time, "GO!", OnTimerStart, OnTimerEnd));
-            return;
+            Pause.IsPaused = false;
+        }
 
-            void OnTimerEnd()
-            {
-                Pause.IsPaused = false;
-                if (PhotonNetwork.IsMasterClient) _photonView.RPC(nameof(StartGameTimerRPC), RpcTarget.All, _gameTimer);
-            }
-
-            void OnTimerStart()
-            {
-                Pause.IsPaused = true;
-            }
+        private void GameTimerStartInitialization()
+        {
+            print("Game started");
+            _photonView.RPC(nameof(RPCGameTimerStart), RpcTarget.Others);
         }
 
         [PunRPC]
-        private void StartGameTimerRPC(float time)
+        private void RPCGameTimerStart()
         {
-            if (_timerCoroutine != null) StopCoroutine(_timerCoroutine);
-            _timerCoroutine = null;
-            _timerCoroutine = StartCoroutine(StartTimer(time, "end", OnTimerStart, OnTimerEnd));
-            return;
+            print("Game started");
+        }
 
-            void OnTimerStart()
-            {
-                print("Game started");
-            }
+        private void GameTimerStartCompletion()
+        {
+            print("Game ended");
+            _photonView.RPC(nameof(RPCGameTimerComplete), RpcTarget.Others);
+        }
 
-            void OnTimerEnd()
-            {
-                print("Game ended");
-            }
+        [PunRPC]
+        private void RPCGameTimerComplete()
+        {
+            print("Game ended");
         }
 
         private IEnumerator StartTimer(float time, string onendMessage, Action onTimerStart, Action onTimerEnd)

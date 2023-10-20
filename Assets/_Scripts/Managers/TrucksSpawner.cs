@@ -42,6 +42,7 @@ namespace _Scripts.Managers
         {
             var player = PhotonNetwork.CurrentRoom.GetPlayer(playerID);
             var truck = PhotonView.Find(truckViewID).gameObject;
+            truck.name = $"Truck_{playerID}";
             var controller = truck.GetComponent<TruckController>();
             controller.Initialize(_driftManager, _inputManager);
             controller.SetPlayerId(playerID);

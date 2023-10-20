@@ -360,6 +360,7 @@ MonoBehaviour:
   _speed: 0
   _isEngineRunning: 0
   _gearState: 0
+  _photonView: {fileID: 0}
 --- !u!114 &4892192276161007392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1416,6 +1417,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1083907808163325478}
   - component: {fileID: 4864277166153464628}
+  - component: {fileID: 1416911108323152177}
   m_Layer: 0
   m_Name: TruckUpgradeManager
   m_TagString: Untagged
@@ -1467,10 +1469,10 @@ MonoBehaviour:
     - _slot: 1
       _name: Green
       _partSprite: {fileID: 0}
-      _isInstalled: 0
+      _isInstalled: 1
       _upgradePrefabsPath: Upgrades/Body
       _spawnPoint: {fileID: 0}
-      _isBought: 0
+      _isBought: 1
       _price: 100
     - _slot: 1
       _name: Red
@@ -1482,6 +1484,29 @@ MonoBehaviour:
       _price: 100
   _forColoring:
   - {fileID: 3368355142603156038}
+  _photonView: {fileID: 1416911108323152177}
+--- !u!114 &1416911108323152177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394656790242435792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &9017936511639927745
 GameObject:
   m_ObjectHideFlags: 0
