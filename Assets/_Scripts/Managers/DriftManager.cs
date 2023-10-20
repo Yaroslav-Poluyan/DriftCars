@@ -49,5 +49,10 @@ namespace _Scripts.Managers
                 _driftPointsText.text += $"Player {id}: {value}\n";
             }
         }
+
+        public float GetLocalPlayerScore()
+        {
+            return _playersDriftPoints[PhotonNetwork.LocalPlayer.ActorNumber];
+        }
     }
 }

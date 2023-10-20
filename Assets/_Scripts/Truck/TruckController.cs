@@ -19,6 +19,7 @@ namespace _Scripts.Truck
     public class TruckController : MonoBehaviourPunCallbacks
     {
         [SerializeField] private EngineAudio _engineAudio;
+        [field: SerializeField] public TruckUpgradeManager UpgradeManager { get; private set; }
         [SerializeField] private TruckEffects _truckEffects;
         [SerializeField] private WheelColliders _colliders;
         [SerializeField] private WheelMeshes _wheelMeshes;
@@ -66,6 +67,8 @@ namespace _Scripts.Truck
         private float _minMagnitudeForDrift = 10f;
 
         public WheelColliders Colliders => _colliders;
+
+        public Rigidbody PlayerRb => _playerRb;
 
         #region Network
 
@@ -119,7 +122,7 @@ namespace _Scripts.Truck
         {
             print("isDrifting: " + _isDrifting);
             if (_slipAngle > _driftAngleMin &&
-                _playerRb.velocity.magnitude >= _minMagnitudeForDrift)
+                PlayerRb.velocity.magnitude >= _minMagnitudeForDrift)
             {
                 if (!_isDrifting)
                 {
@@ -163,8 +166,8 @@ namespace _Scripts.Truck
                 _gearState = GearState.Running;
             }
 
-            _slipAngle = Vector3.Angle(transform.forward, _playerRb.velocity - transform.forward);
-            var movingDirection = Vector3.Dot(transform.forward, _playerRb.velocity);
+            _slipAngle = Vector3.Angle(transform.forward, PlayerRb.velocity - transform.forward);
+            var movingDirection = Vector3.Dot(transform.forward, PlayerRb.velocity);
             if (_gearState != GearState.Changing)
             {
                 if (_gearState == GearState.Neutral)
@@ -268,7 +271,7 @@ namespace _Scripts.Truck
             if (_slipAngle < 120f)
             {
                 steeringAngle +=
-                    Vector3.SignedAngle(transform.forward, _playerRb.velocity + transform.forward, Vector3.up);
+                    Vector3.SignedAngle(transform.forward, PlayerRb.velocity + transform.forward, Vector3.up);
             }
 
             steeringAngle = Mathf.Clamp(steeringAngle, -MaxSteerAngle, MaxSteerAngle);

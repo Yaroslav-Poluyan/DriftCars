@@ -26,7 +26,7 @@ namespace _Scripts.Network
         public override void OnConnectedToMaster()
         {
             Debug.Log("Connected to master " + PhotonNetwork.CloudRegion);
-            _scenesManager.LoadScene(ScenesManager.SceneType.Connect);
+            _scenesManager.LoadScene(ScenesManager.SceneType.MainMenu);
         }
     }
 }

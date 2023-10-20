@@ -13,13 +13,17 @@ namespace _Scripts.SceneManagement
         [field: SerializeField] public SceneReference ConnectScene { get; private set;}
         [field: SerializeField] public SceneReference LobbyScene { get; private set;}
         [field: SerializeField] public SceneReference GameScene { get; private set;}
+        [field: SerializeField] public SceneReference MainMenuScene { get; private set;}
+        [field: SerializeField] public SceneReference GarageScene { get; private set;}
 
         public enum SceneType
         {
             Initial,
             Connect,
             Lobby,
-            Game
+            Game,
+            MainMenu,
+            Garage
         }
 
         public void LoadScene(SceneType sceneType)
@@ -30,6 +34,8 @@ namespace _Scripts.SceneManagement
                 SceneType.Connect => ConnectScene,
                 SceneType.Lobby => LobbyScene,
                 SceneType.Game => GameScene,
+                SceneType.MainMenu => MainMenuScene,
+                SceneType.Garage => GarageScene,
                 _ => _currentScene
             };
             SceneManager.LoadScene(_currentScene.ScenePath);

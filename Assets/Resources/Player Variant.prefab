@@ -11,14 +11,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 3368355142601159818, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3368355142601159819, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
-      propertyPath: sceneViewId
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3368355142601386148, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -61,14 +53,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3368355142601386148, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4892192276348933961, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4892192276379512578, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

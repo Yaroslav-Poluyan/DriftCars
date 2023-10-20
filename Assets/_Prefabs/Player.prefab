@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3368355142601386148}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3368355142602188934
 MeshFilter:
@@ -122,7 +122,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3368355142601386148}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3368355142602188928
 MeshFilter:
@@ -212,7 +212,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3368355142601386150}
   - {fileID: 3368355142601386144}
   - {fileID: 3368355142601386146}
   - {fileID: 3368355142601386156}
@@ -224,6 +223,7 @@ Transform:
   - {fileID: 4892192276757255927}
   - {fileID: 7210946941844366710}
   - {fileID: 6395842663154016179}
+  - {fileID: 1083907808163325478}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _engineAudio: {fileID: 4892192276161007392}
+  <UpgradeManager>k__BackingField: {fileID: 4864277166153464628}
   _truckEffects: {fileID: 6395842663154016178}
   _colliders:
     _frWheel: {fileID: 4892192276379512701}
@@ -427,91 +428,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!1 &3368355142601159814
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3368355142601386150}
-  - component: {fileID: 3368355142602188932}
-  - component: {fileID: 3368355142603156036}
-  m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3368355142601386150
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368355142601159814}
-  m_LocalRotation: {x: -0.7601695, y: 0, z: -0, w: 0.6497248}
-  m_LocalPosition: {x: -0, y: 0.9709037, z: -1.7681228}
-  m_LocalScale: {x: 10.997243, y: 3.8182943, z: 10.997243}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3368355142601386148}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3368355142602188932
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368355142601159814}
-  m_Mesh: {fileID: 4300002, guid: 6cc031a77f676ac448bc392ea683c4ae, type: 3}
---- !u!23 &3368355142603156036
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368355142601159814}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 420d6853eed791245a9f517f6be557e9, type: 2}
-  - {fileID: 2100000, guid: ec4c0518b32fb9f43b3f6adb9439319b, type: 2}
-  - {fileID: 2100000, guid: 920d36ac9a4387a4ab27b6533d77db8d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &3368355142601159816
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,7 +459,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3368355142601386148}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3368355142602188942
 MeshFilter:
@@ -630,7 +546,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3368355142601386148}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3368355142602188930
 MeshFilter:
@@ -717,7 +633,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3368355142601386148}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3368355142602188940
 MeshFilter:
@@ -805,7 +721,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3368355142601386148}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &4892192276348933959
 WheelCollider:
@@ -940,7 +856,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4892192276348933957}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
@@ -981,7 +897,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3368355142601386148}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &4892192276379512701
 WheelCollider:
@@ -1116,7 +1032,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4892192276379512699}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
@@ -1156,7 +1072,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3368355142601386148}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &4892192276757255926
 WheelCollider:
@@ -1315,7 +1231,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3368355142601386148}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!146 &4892192277851569371
 WheelCollider:
@@ -1473,7 +1389,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3368355142601386148}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6395842663154016178
 MonoBehaviour:
@@ -1490,6 +1406,113 @@ MonoBehaviour:
   _tireTrailPrefab: {fileID: 7320582905928263012, guid: 6bf28db72d541438e9f16faff1e531b2, type: 3}
   _tireParticlesPrefab: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3, type: 3}
   _truckController: {fileID: 4892192276161007406}
+--- !u!1 &8394656790242435792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1083907808163325478}
+  - component: {fileID: 4864277166153464628}
+  m_Layer: 0
+  m_Name: TruckUpgradeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1083907808163325478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394656790242435792}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8704680656356459249}
+  m_Father: {fileID: 3368355142601386148}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4864277166153464628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394656790242435792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab32f3b319c3415d830b57228713e3b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _truckUpgrades:
+  - _slot: 0
+    _parts:
+    - _slot: 0
+      _name: Spolier
+      _partSprite: {fileID: 0}
+      _isInstalled: 0
+      _upgradePrefabsPath: Upgrades/Spoiler
+      _spawnPoint: {fileID: 8704680656356459249}
+      _isBought: 0
+      _price: 100
+  - _slot: 1
+    _parts:
+    - _slot: 1
+      _name: Green
+      _partSprite: {fileID: 0}
+      _isInstalled: 0
+      _upgradePrefabsPath: Upgrades/Body
+      _spawnPoint: {fileID: 0}
+      _isBought: 0
+      _price: 100
+    - _slot: 1
+      _name: Red
+      _partSprite: {fileID: 0}
+      _isInstalled: 0
+      _upgradePrefabsPath: Upgrades/Body1
+      _spawnPoint: {fileID: 0}
+      _isBought: 0
+      _price: 100
+  _forColoring:
+  - {fileID: 3368355142603156038}
+--- !u!1 &9017936511639927745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8704680656356459249}
+  m_Layer: 0
+  m_Name: spoilerSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8704680656356459249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9017936511639927745}
+  m_LocalRotation: {x: -0.7601695, y: -0, z: -0, w: 0.6497248}
+  m_LocalPosition: {x: 0, y: 0.97090364, z: -1.7681228}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1083907808163325478}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3842637245419061049
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1499,7 +1522,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5855141581034740303, guid: c82804f195ba3984ab83e8355a8be0b8, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5855141581034740303, guid: c82804f195ba3984ab83e8355a8be0b8, type: 3}
       propertyPath: m_LocalPosition.x
