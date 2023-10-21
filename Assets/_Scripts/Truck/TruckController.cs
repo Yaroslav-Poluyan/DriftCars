@@ -82,7 +82,6 @@ namespace _Scripts.Truck
             }
 
             _isLocalPlayer = _photonView.IsMine;
-            Debug.LogError($"SetPlayerId owner: {playerActorNumber} to truck name: {gameObject.name}");
         }
 
         #endregion

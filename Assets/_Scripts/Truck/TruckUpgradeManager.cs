@@ -102,7 +102,6 @@ namespace _Scripts.Truck
                 foreach (var partOfType in partsOfSlot) partOfType._isInstalled = false;
 
                 part._isInstalled = true;
-                Save();
             }
 
             string currentPartPath;
@@ -143,17 +142,16 @@ namespace _Scripts.Truck
         {
             linkedPart._isBought = true;
             _playerResourcesManager.RemoveMoney(linkedPart._price);
-            Save();
         }
 
         public void ImplementUpgrade(Part linkedPart)
         {
-            var upgradeIndex = _truckUpgrades.FindAll(x => x._slot == linkedPart._slot).SelectMany(x => x._parts)
-                .ToList().IndexOf(linkedPart);
+            var upgradeIndex = _truckUpgrades.FindAll(x => x._slot == linkedPart._slot).
+                SelectMany(x => x._parts).ToList().IndexOf(linkedPart);
             ImplementUpgrade(linkedPart._slot, upgradeIndex);
         }
 
-        private void Save()
+        public void Save()
         {
             if (PhotonNetwork.InRoom)
                 if (!_photonView.IsMine)
@@ -241,12 +239,11 @@ namespace _Scripts.Truck
             }
 
             var parentTruckController = GetComponentInParent<TruckController>();
-            Debug.LogError("UpdateCarStateOnClients recieved values for " +
-                           parentTruckController.name);
+            Debug.Log("UpdateCarStateOnClients recieved values for " + parentTruckController.name);
             var log = values.Aggregate("Values: ", (current, value) =>
                 current +
                 $"Slot: \n {value.slot} \n Level: {value.level} \n IsInstalled: {value.isInstalled} \n IsBought: {value.isBought} \n");
-            Debug.LogError(log);
+            Debug.Log(log);
             // Update local state
             ImplementUpgrades(values);
         }

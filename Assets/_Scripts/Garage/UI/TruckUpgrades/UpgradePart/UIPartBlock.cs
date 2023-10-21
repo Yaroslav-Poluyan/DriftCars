@@ -68,12 +68,14 @@ namespace _Scripts.Garage.UI.TruckUpgrades.UpgradePart
         {
             _playerResourcesManager.RemoveMoney(_linkedPart._price);
             _garageTruckChanger.CurrentTruck.UpgradeManager.BuyPart(_linkedPart);
+            _garageTruckChanger.CurrentTruck.UpgradeManager.Save();
             _partUpgradePanel.OnPartsChanged();
         }
 
         public void InstallButtonPressedHandler()
         {
             _garageTruckChanger.CurrentTruck.UpgradeManager.ImplementUpgrade(_linkedPart);
+            _garageTruckChanger.CurrentTruck.UpgradeManager.Save();
             _partUpgradePanel.OnPartsChanged();
         }
     }

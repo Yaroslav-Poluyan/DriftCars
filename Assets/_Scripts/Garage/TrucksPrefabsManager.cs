@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace _Scripts.Garage
@@ -38,6 +39,11 @@ namespace _Scripts.Garage
         public int GetPlayerTruckPresetDataIndex(TruckPresetData currentTruckPreset)
         {
             return _truckPrefabs.IndexOf(currentTruckPreset);
+        }
+
+        public TruckPresetData GetPreset(int id)
+        {
+            return _truckPrefabs.FirstOrDefault(truckPreset => truckPreset.PrefabID == id);
         }
     }
 }

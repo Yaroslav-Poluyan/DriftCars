@@ -85,7 +85,7 @@ namespace _Scripts.Garage
 
         public void ChooseCurrentTruck()
         {
-            ES3.Save("CurrentTruck", _trucksPrefabsManager.GetPlayerTruckPresetDataIndex(_currentTruckPreset));
+            ES3.Save("CurrentTruck", _currentTruckPreset.PrefabID);
         }
 
         public void BuyCurrentTruck()
