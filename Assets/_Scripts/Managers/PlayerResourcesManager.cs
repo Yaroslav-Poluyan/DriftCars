@@ -7,6 +7,8 @@ namespace _Scripts.Managers
 {
     public class PlayerResourcesManager : MonoBehaviour
     {
+        public static event Action<float> OnMoneyChanged;
+        public static event Action<float> OnDriftScoreChanged;
         [SerializeField] private PlayerResourcesData _playerResourcesData;
 
         private void Awake()
@@ -14,19 +16,24 @@ namespace _Scripts.Managers
             UpdatePlayerScore(TotalDriftScore);
         }
 
-        private float Money
+        public float Money
         {
             get => _playerResourcesData._money;
-            set => _playerResourcesData._money = value;
+            private set
+            {
+                _playerResourcesData._money = value;
+                OnMoneyChanged?.Invoke(value);
+            }
         }
 
-        private float TotalDriftScore
+        public float TotalDriftScore
         {
             get => _playerResourcesData._totalDriftScore;
-            set
+            private set
             {
                 _playerResourcesData._totalDriftScore = value;
                 UpdatePlayerScore(value);
+                OnDriftScoreChanged?.Invoke(value);
             }
         }
 
@@ -62,6 +69,11 @@ namespace _Scripts.Managers
         public bool IsEnoughMoney(float price)
         {
             return Money >= price;
+        }
+
+        public bool CheckIsEnoughMoney(float presetPrice)
+        {
+            return Money >= presetPrice;
         }
     }
 }

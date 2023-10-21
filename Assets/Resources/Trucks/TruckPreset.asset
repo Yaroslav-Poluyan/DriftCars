@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d03e7857d92a0049b9c3c33a298a319, type: 3}
   m_Name: TruckPreset
   m_EditorClassIdentifier: 
+  <IsBought>k__BackingField: 1
+  <Price>k__BackingField: 100
+  <PrefabID>k__BackingField: 0
   <TruckPrefab>k__BackingField: {fileID: 841718332443644552, guid: d8c94f5cd8f3d054ca52245c5f751acc, type: 3}

@@ -16,7 +16,6 @@ namespace _Scripts.Garage
         private Transform _currentPlate;
         private TruckController _currentTruck;
         private Transform _previousPlate;
-        private TruckController _previousTruck;
         private TruckPresetData _currentTruckPreset;
         [Inject] private TrucksPrefabsManager _trucksPrefabsManager;
         [Inject] private PlayerResourcesManager _playerResourcesManager;
@@ -77,7 +76,6 @@ namespace _Scripts.Garage
 
             _previousPlate = _currentPlate;
             _currentPlate = newPlate;
-            _previousTruck = CurrentTruck;
             _currentTruck = newTruck;
             _currentTruckPreset = truckPreset;
 
@@ -88,6 +86,22 @@ namespace _Scripts.Garage
         public void ChooseCurrentTruck()
         {
             ES3.Save("CurrentTruck", _trucksPrefabsManager.GetPlayerTruckPresetDataIndex(_currentTruckPreset));
+        }
+
+        public void BuyCurrentTruck()
+        {
+            var currentTruckPrefabID = _currentTruckPreset.PrefabID;
+            var preset = _trucksPrefabsManager.GetPlayerTruckPresetData(currentTruckPrefabID);
+            if (_playerResourcesManager.CheckIsEnoughMoney(preset.Price))
+            {
+                _playerResourcesManager.RemoveMoney(preset.Price);
+                preset.IsBought = true;
+            }
+        }
+
+        public TruckPresetData GetCurrentTruckPreset()
+        {
+            return _currentTruckPreset;
         }
     }
 }
