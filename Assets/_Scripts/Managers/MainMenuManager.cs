@@ -9,6 +9,7 @@ namespace _Scripts.Managers
     public class MainMenuManager : MonoBehaviour
     {
         [SerializeField] private Button  _toGarageButton;
+        [SerializeField] private Button _toStoreButton;
         [SerializeField] private Button _findGameButton;
         [Inject] private ScenesManager _scenesManager;
 
@@ -16,6 +17,12 @@ namespace _Scripts.Managers
         {
             _toGarageButton.onClick.AddListener(ToGarageBurronPressedHandler);
             _findGameButton.onClick.AddListener(FindGameButtonPressedHandler);
+            _toStoreButton.onClick.AddListener(ToStoreButtonPressedHandler);
+        }
+
+        private void ToStoreButtonPressedHandler()
+        {
+            _scenesManager.LoadScene(ScenesManager.SceneType.Store);
         }
 
         private void FindGameButtonPressedHandler()

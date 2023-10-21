@@ -1,11 +1,12 @@
 ﻿using System;
+using _Scripts.IAPS;
 using _Scripts.ScriptableObjects;
 using Photon.Pun;
 using UnityEngine;
 
 namespace _Scripts.Managers
 {
-    public class PlayerResourcesManager : MonoBehaviour
+    public class PlayerResourcesManager : MonoBehaviour, IProductPurchaseHandler
     {
         public static event Action<float> OnMoneyChanged;
         public static event Action<float> OnDriftScoreChanged;
@@ -74,6 +75,33 @@ namespace _Scripts.Managers
         public bool CheckIsEnoughMoney(float presetPrice)
         {
             return Money >= presetPrice;
+        }
+
+        public void OnPurchase(Product product)
+        {
+            print($"Purchased {product}");
+            switch (product)
+            {
+                case Product.FiveHundredDollars:
+                    AddMoney(500);
+                    break;
+                case Product.OneThousandAndFiveHundredDollars:
+                    AddMoney(1500);
+                    break;
+                case Product.FiveThousandDollars:
+                    AddMoney(5000);
+                    break;
+                case Product.TenThousandDollars:
+                    AddMoney(10000);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(product), product, null);
+            }
+        }
+
+        public void OnPurchaseFail(Product product, string reason)
+        {
+            Debug.LogError($"Failed to purchase {product} because of {reason}");
         }
     }
 }

@@ -48,6 +48,7 @@ MonoBehaviour:
     - PhotonUnityNetworking.Utilities.PhotonPlayer.Editor
     - PunDemos.DemoHubEditor
     - PunDemos.DemoSlotcarEditor
+    - Purchasing.Common
     - Zenject
     - Zenject-IntegrationTests
     - Zenject-TestFramework
