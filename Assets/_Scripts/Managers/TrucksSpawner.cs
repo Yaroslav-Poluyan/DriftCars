@@ -37,6 +37,7 @@
                     var truck = PhotonNetwork.Instantiate(_truckPrefab.name, spawnPoint.position, spawnPoint.rotation);
                     photonView.RPC(nameof(InitializeTruck), RpcTarget.AllBuffered, truck.GetPhotonView().ViewID,
                         player.ActorNumber);
+                    //не забыть newTruck.TruckPrefabId = truckPreset.PrefabID;
                     truckViewIdToPlayerId.Add(truck.GetPhotonView().ViewID, player.ActorNumber);
                     i++;
                 }

@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d03e7857d92a0049b9c3c33a298a319, type: 3}
+  m_Name: TruckPreset 1
+  m_EditorClassIdentifier: 
+  <PrefabID>k__BackingField: 1
+  <TruckPrefab>k__BackingField: {fileID: 841718332443644552, guid: 8edaf877ec8942d4cb6ccc41a8434a68, type: 3}

@@ -61,6 +61,7 @@ namespace _Scripts.Truck
         private float _wheelRpm;
         public PhotonView _photonView;
         private InputManager.InputManager _inputManager;
+        public int TruckPrefabId { get; set; }
         public bool IsForceBrake { get; private set; } = false;
 
         public WheelColliders Colliders => _colliders;

@@ -98,5 +98,23 @@ namespace _Scripts.Truck
                 wheelParticleTrail.emitting = false;
             }
         }
+
+        public void DisableAllEffects()
+        {
+            _frWheelTrail.emitting = false;
+            _flWheelTrail.emitting = false;
+            _rrWheelTrail.emitting = false;
+            _rlWheelTrail.emitting = false;
+            //
+            _frWheelParticles.Stop();
+            _flWheelParticles.Stop();
+            _rrWheelParticles.Stop();
+            _rlWheelParticles.Stop();
+            //
+            _frSkidSound.Stop();
+            _flSkidSound.Stop();
+            _rrSkidSound.Stop();
+            _rlSkidSound.Stop();
+        }
     }
 }

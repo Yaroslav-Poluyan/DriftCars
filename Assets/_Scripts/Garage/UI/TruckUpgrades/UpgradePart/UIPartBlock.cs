@@ -18,17 +18,17 @@ namespace _Scripts.Garage.UI.TruckUpgrades.UpgradePart
         private TruckUpgradeManager.Part _linkedPart;
         private PartUpgradePanel _partUpgradePanel;
         private PlayerResourcesManager _playerResourcesManager;
-        private GarageManager _garageManager;
+        private GarageTruckChanger _garageTruckChanger;
 
         public void Init(TruckUpgradeManager.Part thisPart, PartUpgradePanel partUpgradePanel,
-            PlayerResourcesManager playerResourcesManager, GarageManager garageManager)
+            PlayerResourcesManager playerResourcesManager, GarageTruckChanger garageManager)
         {
             _partUpgradePanel = partUpgradePanel;
             _linkedPart = thisPart;
             _spriteRenderer.sprite = thisPart._partSprite;
             _nameText.text = thisPart._name;
             _playerResourcesManager = playerResourcesManager;
-            _garageManager = garageManager;
+            _garageTruckChanger = garageManager;
             SetButtons();
         }
 
@@ -67,13 +67,13 @@ namespace _Scripts.Garage.UI.TruckUpgrades.UpgradePart
         public void BuyButtonPressedHandler()
         {
             _playerResourcesManager.RemoveMoney(_linkedPart._price);
-            _garageManager.CurrentTruckController.UpgradeManager.BuyPart(_linkedPart);
+            _garageTruckChanger.CurrentTruck.UpgradeManager.BuyPart(_linkedPart);
             _partUpgradePanel.OnPartsChanged();
         }
 
         public void InstallButtonPressedHandler()
         {
-            _garageManager.CurrentTruckController.UpgradeManager.ImplementUpgrade(_linkedPart);
+            _garageTruckChanger.CurrentTruck.UpgradeManager.ImplementUpgrade(_linkedPart);
             _partUpgradePanel.OnPartsChanged();
         }
     }

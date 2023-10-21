@@ -55,5 +55,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4864277166153464628, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
+      propertyPath: _truckUpgrades.Array.data[1]._parts.Array.data[0]._upgradePrefabsPath
+      value: Upgrades/Body_green
+      objectReference: {fileID: 0}
+    - target: {fileID: 4864277166153464628, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
+      propertyPath: _truckUpgrades.Array.data[1]._parts.Array.data[1]._upgradePrefabsPath
+      value: Upgrades/Body_red
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}

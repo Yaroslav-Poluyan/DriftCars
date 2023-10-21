@@ -354,8 +354,6 @@ MonoBehaviour:
   _increaseGearRpm: 5500
   _decreaseGearRpm: 3300
   _changeGearTime: 0.5
-  _driftAngleMin: 30
-  _driftScoreFactor: 1
   _currentGear: 0
   _speed: 0
   _isEngineRunning: 0
@@ -1485,6 +1483,7 @@ MonoBehaviour:
   _forColoring:
   - {fileID: 3368355142603156038}
   _photonView: {fileID: 1416911108323152177}
+  _truckController: {fileID: 4892192276161007406}
 --- !u!114 &1416911108323152177
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,9 +10,9 @@ namespace _Scripts.Garage
         [SerializeField] private TruckUpgradeManager.Slot _slot;
         [Inject] private TruckUpgradeUI _truckUpgradeUi;
         [Inject] private GarageCameraController _garageCamerasManager;
-        [Inject] private GarageManager _garageManager;
+        [Inject] private GarageTruckChanger _garageTruckChanger;
         private Camera _camera;
-        private TruckUpgradeManager TruckUpgradeManager => _garageManager.CurrentTruckController.UpgradeManager;
+        private TruckUpgradeManager TruckUpgradeManager => _garageTruckChanger.CurrentTruck.UpgradeManager;
 
         private void Start()
         {

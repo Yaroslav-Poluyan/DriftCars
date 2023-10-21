@@ -11,7 +11,7 @@ namespace _Scripts.Garage
         [SerializeField] private Transform _garageCameraTarget;
         [SerializeField] private float _rotationSpeed = 100f; // Настройка скорости вращения
         [Inject] private InputManager.InputManager _inputManager;
-        [Inject] private GarageManager _garageManager;
+        [Inject] private GarageTruckChanger _garageTruckChanger;
         private float _radius = 5f;
         private Vector3 _defaultPosition;
         private float _angle = 0f;
@@ -48,7 +48,7 @@ namespace _Scripts.Garage
 
         public void SetCameraToPartPosition(TruckUpgradeLabel truckUpgradeLabel)
         {
-            var truck = _garageManager.CurrentTruckController;
+            var truck = _garageTruckChanger.CurrentTruck;
             var direction = Vector3.ProjectOnPlane(truckUpgradeLabel.transform.position - truck.transform.position,
                 Vector3.up);
             var position = truck.transform.position + direction.normalized * _radius;
@@ -70,7 +70,7 @@ namespace _Scripts.Garage
             };
         }
 
-        private void SwitchTouchMove(bool canBeMovedByTouch)
+        public void SwitchTouchMove(bool canBeMovedByTouch)
         {
             _canBeMovedByTouch = canBeMovedByTouch;
         }

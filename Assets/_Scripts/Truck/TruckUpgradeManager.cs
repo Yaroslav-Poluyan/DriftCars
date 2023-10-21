@@ -38,6 +38,7 @@ namespace _Scripts.Truck
         [SerializeField] private List<PartsOfTypeContainer> _truckUpgrades = new();
         [SerializeField] private List<MeshRenderer> _forColoring = new();
         [SerializeField] private PhotonView _photonView;
+        [SerializeField] private TruckController _truckController;
         private PlayerResourcesManager _playerResourcesManager;
         private bool _synced;
 
@@ -49,7 +50,7 @@ namespace _Scripts.Truck
 #else
             ES3Settings.defaultSettings.path = Application.persistentDataPath + "/savedata.json";
 #endif
-            Debug.LogError("Save path: " + ES3Settings.defaultSettings.path);
+            //Debug.LogError("Save path: " + ES3Settings.defaultSettings.path);
             if (!PhotonNetwork.InRoom) LoadAllUpgrades();
         }
 
@@ -158,28 +159,29 @@ namespace _Scripts.Truck
                 if (!_photonView.IsMine)
                     return;
 
-            var statesList = new List<(Slot slot, int level, bool isInstalled, bool isBought)>();
+            var statesList = new List<(Slot slot, int level, bool isInstalled, bool isBought, int truckDataID)>();
             foreach (var partsOfTypeContainer in _truckUpgrades)
             {
                 foreach (var part in partsOfTypeContainer._parts)
                 {
                     statesList.Add((partsOfTypeContainer._slot, Array.IndexOf(partsOfTypeContainer._parts, part),
-                        part._isInstalled, part._isBought));
+                        part._isInstalled, part._isBought, _truckController.TruckPrefabId));
                 }
             }
 
-            ES3.Save("TruckUpgrades", statesList);
+            ES3.Save("TruckUpgrades_" + _truckController.TruckPrefabId, statesList);
         }
 
-        private static List<(Slot slot, int level, bool isInstalled, bool isBought)> Load()
+        private List<(Slot slot, int level, bool isInstalled, bool isBought, int truckDataID)> Load()
         {
-            if (!ES3.KeyExists("TruckUpgrades")) return null;
-            var statesList = ES3.Load("TruckUpgrades",
-                new List<(Slot slot, int level, bool isInstalled, bool isBought)>());
+            if (!ES3.KeyExists("TruckUpgrades_" + _truckController.TruckPrefabId)) return null;
+            var statesList = ES3.Load(("TruckUpgrades_" + _truckController.TruckPrefabId),
+                new List<(Slot slot, int level, bool isInstalled, bool isBought, int truckDataID)>());
             return statesList;
         }
 
-        private void ImplementUpgrades(List<(Slot slot, int level, bool isInstalled, bool isBought)> values)
+        private void ImplementUpgrades(
+            List<(Slot slot, int level, bool isInstalled, bool isBought, int truckDataID)> values)
         {
             foreach (var truckUpgrade in _truckUpgrades)
             foreach (var part in truckUpgrade._parts)
@@ -198,10 +200,13 @@ namespace _Scripts.Truck
             }
         }
 
-        private void UpdateCarState(List<(Slot slot, int level, bool isInstalled, bool isBought)> values)
+        private void UpdateCarState(
+            List<(Slot slot, int level, bool isInstalled, bool isBought, int truckDataID)> values)
         {
             var objects = values
-                .Select(value => $"{(int) value.slot},{value.level},{value.isInstalled},{value.isBought}").ToArray();
+                .Select(value =>
+                    $"{(int) value.slot},{value.level},{value.isInstalled},{value.isBought}, {value.truckDataID}")
+                .ToArray();
             // if is in room
             if (PhotonNetwork.InRoom && _photonView.IsMine)
             {
@@ -218,7 +223,7 @@ namespace _Scripts.Truck
         private void UpdateCarStateOnClients(object[] valuesArray, int viewID)
         {
             if (_photonView.ViewID != viewID) return;
-            var values = new List<(Slot slot, int level, bool isInstalled, bool isBought)>();
+            var values = new List<(Slot slot, int level, bool isInstalled, bool isBought, int truckDataID)>();
 
             foreach (var valuesObj in valuesArray)
             {
@@ -230,7 +235,8 @@ namespace _Scripts.Truck
                     var level = int.Parse(stringData[1]);
                     var isInstalled = bool.Parse(stringData[2]);
                     var isBought = bool.Parse(stringData[3]);
-                    values.Add((slot, level, isInstalled, isBought));
+                    var truckDataID = int.Parse(stringData[4]);
+                    values.Add((slot, level, isInstalled, isBought, truckDataID));
                 }
             }
 

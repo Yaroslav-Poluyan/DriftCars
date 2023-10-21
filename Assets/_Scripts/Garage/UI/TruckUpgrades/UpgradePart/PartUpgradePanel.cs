@@ -13,7 +13,7 @@ namespace _Scripts.Garage.UI.TruckUpgrades.UpgradePart
         [SerializeField] private TextMeshProUGUI _partNameText;
         [SerializeField] private Transform _partBlockContainer;
         private readonly List<UIPartBlock> _createdPartBlocks = new();
-        [Inject] private GarageManager _garageManager;
+        [Inject] private GarageTruckChanger _garageTruckChanger;
         [Inject] private PlayerResourcesManager _playerResourcesManager;
 
         public void SetVisibility(bool state)
@@ -25,7 +25,7 @@ namespace _Scripts.Garage.UI.TruckUpgrades.UpgradePart
         {
             _partNameText.text = slot.ToString();
             var listPrefabParts =
-                _garageManager.CurrentTruckController.UpgradeManager.GetAvailableParts(slot);
+                _garageTruckChanger.CurrentTruck.UpgradeManager.GetAvailableParts(slot);
 
             foreach (Transform child in _partBlockContainer.transform)
             {
@@ -37,7 +37,7 @@ namespace _Scripts.Garage.UI.TruckUpgrades.UpgradePart
             foreach (var part in listPrefabParts)
             {
                 var partBlock = Instantiate(_partBlockPrefab, _partBlockContainer);
-                partBlock.Init(part, this, _playerResourcesManager, _garageManager);
+                partBlock.Init(part, this, _playerResourcesManager, _garageTruckChanger);
                 _createdPartBlocks.Add(partBlock);
             }
         }
