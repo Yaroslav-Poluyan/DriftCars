@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using _Scripts.Managers;
+using _Scripts.UI;
 using Photon.Pun;
 using UnityEngine;
-using Zenject;
 using Random = UnityEngine.Random;
 
 namespace _Scripts.Truck
@@ -38,10 +38,8 @@ namespace _Scripts.Truck
 
         #region Drift
 
-        [SerializeField] private float _driftAngleMin = 30f;
-        [SerializeField] private float _driftScoreFactor = 1f;
         private float _currentDriftScore;
-        private bool _isDrifting = false;
+        private bool _isDrifting;
         private DriftManager _driftManager;
 
         #endregion
@@ -54,7 +52,6 @@ namespace _Scripts.Truck
         private const float SteeringSpeed = 50f;
         private const float MaxSteerAngle = 60f;
         private float _rpm;
-        private Rigidbody _playerRb;
         private float _gasInput;
         private float _brakeInput;
         private float _steeringInput;
@@ -64,11 +61,11 @@ namespace _Scripts.Truck
         private float _wheelRpm;
         public PhotonView _photonView;
         private InputManager.InputManager _inputManager;
-        private float _minMagnitudeForDrift = 10f;
+        public bool IsForceBrake { get; private set; } = false;
 
         public WheelColliders Colliders => _colliders;
 
-        public Rigidbody PlayerRb => _playerRb;
+        public Rigidbody PlayerRb { get; private set; }
 
         #region Network
 
@@ -89,17 +86,30 @@ namespace _Scripts.Truck
 
         #endregion
 
+        private void Start()
+        {
+            FinishPanel.OnFinishPanelOpened += OnGameEnd;
+        }
+
         public void Initialize(DriftManager driftManager, InputManager.InputManager inputManager)
         {
             _inputManager = inputManager;
             _driftManager = driftManager;
             _photonView = GetComponent<PhotonView>();
-            _playerRb = gameObject.GetComponent<Rigidbody>();
+            PlayerRb = gameObject.GetComponent<Rigidbody>();
+        }
+
+        private void OnGameEnd()
+        {
+            _isDrifting = false;
+            IsForceBrake = true;
+            _driftManager.AddDriftPoints(_photonView.OwnerActorNr, _currentDriftScore);
+            _currentDriftScore = 0;
         }
 
         private void Update()
         {
-            if (Pause.IsPaused)
+            if (Pause.IsPaused || IsForceBrake)
             {
                 ForceBreak();
                 return;
@@ -126,15 +136,15 @@ namespace _Scripts.Truck
 
         private void CheckDrift()
         {
-            if (_slipAngle > _driftAngleMin &&
-                PlayerRb.velocity.magnitude >= _minMagnitudeForDrift)
+            if (_slipAngle > _driftManager.DriftAngleMin &&
+                PlayerRb.velocity.magnitude >= DriftManager.MinMagnitudeForDrift)
             {
                 if (!_isDrifting)
                 {
                     _isDrifting = true;
                 }
 
-                var points = _slipAngle * _driftScoreFactor;
+                var points = _slipAngle * _driftManager.DriftScoreFactor;
                 _currentDriftScore += points;
             }
             else
@@ -160,6 +170,7 @@ namespace _Scripts.Truck
             {
                 return;
             }
+
             _gasInput = _inputManager.GetVerticalInput();
             _steeringInput = _inputManager.GetHorizontalInput();
             _photonView.RPC(nameof(ReceiveInput), RpcTarget.Others, _gasInput, _brakeInput, _steeringInput);

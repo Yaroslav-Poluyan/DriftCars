@@ -154,7 +154,8 @@ PlayerSettings:
   resetResolutionOnWindowResize: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Android: com.DefaultCompany.DriftCars
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -237,14 +238,14 @@ PlayerSettings:
   clonedFromGUID: c0afd0d1d80e3634a9dac47e8a0426ea
   templatePackageId: com.unity.template.3d@8.1.3
   templateDefaultScene: Assets/Scenes/SampleScene.unity
-  useCustomMainManifest: 0
+  useCustomMainManifest: 1
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 0
   useCustomLauncherGradleManifest: 0
   useCustomBaseGradleTemplate: 0
-  useCustomGradlePropertiesTemplate: 0
+  useCustomGradlePropertiesTemplate: 1
   useCustomProguardFile: 0
-  AndroidTargetArchitectures: 1
+  AndroidTargetArchitectures: 3
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
@@ -708,7 +709,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;UNITY_VISUAL_SCRIPTING
+    Android: PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;UNITY_VISUAL_SCRIPTING;DREAMTECK_SPLINES
     EmbeddedLinux: PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;UNITY_VISUAL_SCRIPTING
     GameCoreScarlett: PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER
     GameCoreXboxOne: PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER
@@ -727,7 +728,8 @@ PlayerSettings:
     tvOS: PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;UNITY_VISUAL_SCRIPTING
   additionalCompilerArguments: {}
   platformArchitecture: {}
-  scriptingBackend: {}
+  scriptingBackend:
+    Android: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
@@ -735,7 +737,7 @@ PlayerSettings:
   allowUnsafeCode: 0
   useDeterministicCompilation: 1
   enableRoslynAnalyzers: 1
-  selectedPlatform: 0
+  selectedPlatform: 2
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   gcIncremental: 1

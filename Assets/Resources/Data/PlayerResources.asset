@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacf22cccd884c8a9d915ad81090d53c, type: 3}
   m_Name: PlayerResources
   m_EditorClassIdentifier: 
-  _money: 100000
-  _totalDriftScore: 1576
+  _money: 0
+  _totalDriftScore: 0

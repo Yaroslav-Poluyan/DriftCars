@@ -10,6 +10,7 @@ namespace _Scripts.UI
 {
     public class FinishPanel : MonoBehaviour
     {
+        public static Action OnFinishPanelOpened;
         [SerializeField] private TextMeshProUGUI _scoreText;
         [SerializeField] private Button _getMoney;
         [SerializeField] private Button _doubleMoneyViaAd;
@@ -21,6 +22,7 @@ namespace _Scripts.UI
         {
             _getMoney.onClick.AddListener(GetMoneyButtonPressedHandler);
             _doubleMoneyViaAd.onClick.AddListener(WatchAd);
+            IronSourceEvents.onRewardedVideoAdRewardedEvent += VideoAdWatchedHandler;
         }
 
         private void GetMoneyButtonPressedHandler()
@@ -33,18 +35,29 @@ namespace _Scripts.UI
 
         private static void WatchAd()
         {
-            /*if (IronSource.Agent.isRewardedVideoAvailable())
+            Debug.Log("unity-script: ShowRewardedVideoButtonClicked");
+            if (IronSource.Agent.isRewardedVideoAvailable())
             {
                 IronSource.Agent.showRewardedVideo();
             }
             else
             {
-                Debug.Log("Rewarded video is not available yet");
-            }*/
+                Debug.Log("unity-script: IronSource.Agent.isRewardedVideoAvailable - False");
+            }
+        }
+
+        private void VideoAdWatchedHandler(IronSourcePlacement ironSourcePlacement)
+        {
+            var localScore = _driftManager.GetLocalPlayerScore();
+            _playerResourcesManager.AddMoney(localScore * 2);
+            _playerResourcesManager.AddDriftScore(localScore);
+            _sceneLoader.LoadScene(ScenesManager.SceneType.MainMenu);
         }
 
         public void Open()
         {
+            OnFinishPanelOpened?.Invoke();
+            gameObject.SetActive(true);
             var localScore = _driftManager.GetLocalPlayerScore();
             _scoreText.text = $"Your score: {localScore}";
         }

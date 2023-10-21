@@ -8,6 +8,10 @@ namespace _Scripts.Managers
     public class DriftManager : MonoBehaviourPunCallbacks
     {
         [SerializeField] private TextMeshProUGUI _driftPointsText;
+        [field: SerializeField] public float DriftAngleMin { get; private set; } = 30f;
+        [field: SerializeField] public float DriftScoreFactor { get; private set; } = 1f;
+        [field: SerializeField] public static float MinMagnitudeForDrift { get; private set; } = 10f;
+
         private readonly Dictionary<int, float> _playersDriftPoints = new();
         private PhotonView _photonView;
 
@@ -19,6 +23,7 @@ namespace _Scripts.Managers
             {
                 _playersDriftPoints.Add(player.ActorNumber, 0);
             }
+            UpdateDriftPointsText();
         }
 
         [PunRPC]

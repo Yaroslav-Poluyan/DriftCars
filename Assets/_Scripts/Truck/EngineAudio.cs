@@ -23,7 +23,7 @@ namespace _Scripts.Truck
         private float _revLimiter;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             _idleSound.volume = 0;
             _runningSound.volume = 0;
@@ -31,8 +31,16 @@ namespace _Scripts.Truck
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
+            if (_carController.IsForceBrake)
+            {
+                //smoothy stop engine sound
+                _runningSound.volume = Mathf.Lerp(_runningSound.volume, 0, Time.deltaTime * 5f);
+                _reverseSound.volume = Mathf.Lerp(_reverseSound.volume, 0, Time.deltaTime * 5f);
+                _idleSound.volume = Mathf.Lerp(_idleSound.volume, 0, Time.deltaTime * 5f);
+                return;
+            }
             float speedSign = 0;
             if (_carController)
             {
