@@ -250,15 +250,17 @@ MonoBehaviour:
   <LobbyScene>k__BackingField:
     sceneAsset: {fileID: 102900000, guid: 5018d8a1290fedf42b8a9937aa0f2bf5, type: 3}
     scenePath: Assets/_Scenes/LobbyScene.unity
-  <GameScene>k__BackingField:
-    sceneAsset: {fileID: 102900000, guid: a8f77d5cfd2cff64e8251b20576692db, type: 3}
-    scenePath: Assets/_Scenes/Game.unity
   <MainMenuScene>k__BackingField:
     sceneAsset: {fileID: 102900000, guid: 46f71d99bd8f2f24bb9acdcb2a3ed977, type: 3}
     scenePath: Assets/_Scenes/MainMenu.unity
   <GarageScene>k__BackingField:
     sceneAsset: {fileID: 102900000, guid: c82c36f05fda4a04ca652c6fa324a57f, type: 3}
     scenePath: Assets/_Scenes/Garage.unity
+  <Levels>k__BackingField:
+  - sceneAsset: {fileID: 102900000, guid: a8f77d5cfd2cff64e8251b20576692db, type: 3}
+    scenePath: Assets/_Scenes/Level1.unity
+  - sceneAsset: {fileID: 102900000, guid: e9cb1a573ff504247a4199eaceae63eb, type: 3}
+    scenePath: Assets/_Scenes/Level2.unity
 --- !u!1 &2438838782396131031
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace _Scripts.Network
@@ -10,8 +11,9 @@ namespace _Scripts.Network
     {
         [SerializeField] private TextMeshProUGUI _roomNameText;
         [SerializeField] private TextMeshProUGUI _playerListText;
-        [SerializeField] private UnityEngine.UI.Button _leaveRoomButton;
-        [SerializeField] private UnityEngine.UI.Button _startGameButton;
+        [SerializeField] private Button _leaveRoomButton;
+        [SerializeField] private Button _startGameButton;
+        [SerializeField] private TMP_Dropdown _levelDropdown;
         [Inject] private ScenesManager _scenesManager;
 
         private void Start()
@@ -92,7 +94,8 @@ namespace _Scripts.Network
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.LoadLevel(_scenesManager.GameScene);
+                var levelIdx = int.Parse(_levelDropdown.options[_levelDropdown.value].text[5..]);
+                PhotonNetwork.LoadLevel(_scenesManager.GetLevelPath(levelIdx - 1));
             }
         }
     }
