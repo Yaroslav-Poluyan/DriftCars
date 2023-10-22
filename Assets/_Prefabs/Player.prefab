@@ -440,6 +440,10 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4704998541427547783}
+  - {fileID: 8065628863362082330}
+  - {fileID: 5384752633126951847}
+  - {fileID: 7305940215826310698}
+  - {fileID: 7740999560115330175}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1468,6 +1472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6395842663154016179}
   - component: {fileID: 6395842663154016178}
+  - component: {fileID: 1758271107110795585}
   m_Layer: 0
   m_Name: TruckEffects
   m_TagString: Untagged
@@ -1505,6 +1510,29 @@ MonoBehaviour:
   _tireTrailPrefab: {fileID: 7320582905928263012, guid: 6bf28db72d541438e9f16faff1e531b2, type: 3}
   _tireParticlesPrefab: {fileID: 336881577860626726, guid: fe060d0ddb5ca4a6a89d81eaba5c7fe3, type: 3}
   _truckController: {fileID: 4892192276161007406}
+  _photonView: {fileID: 1758271107110795585}
+--- !u!114 &1758271107110795585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6395842663154016172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8394656790242435792
 GameObject:
   m_ObjectHideFlags: 0

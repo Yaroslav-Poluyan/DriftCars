@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
@@ -10,66 +11,53 @@ namespace _Scripts.Truck
         [SerializeField] private ParticleSystem _tireParticlesPrefab;
         [SerializeField] private TruckController _truckController;
         [SerializeField] private PhotonView _photonView;
-
-        //
-        private TrailRenderer _frWheelTrail;
-        private TrailRenderer _flWheelTrail;
-        private TrailRenderer _rrWheelTrail;
-
-        private TrailRenderer _rlWheelTrail;
-
-        //
-        private ParticleSystem _frWheelParticles;
-        private ParticleSystem _flWheelParticles;
-        private ParticleSystem _rrWheelParticles;
-
-        private ParticleSystem _rlWheelParticles;
-
-        //
-        private AudioSource _frSkidSound;
-        private AudioSource _flSkidSound;
-        private AudioSource _rrSkidSound;
-        private AudioSource _rlSkidSound;
-
-        //
+        private readonly List<WheelEffects> _wheelEffectsList = new();
         private const float SlipAllowance = .2f;
+
+        private struct WheelEffects
+        {
+            public TrailRenderer WheelTrail;
+            public ParticleSystem WheelParticles;
+            public AudioSource SkidSound;
+        }
 
         private void Start()
         {
             var wheelColliders = _truckController.Colliders;
-            _frWheelTrail = CreateTireTrail(wheelColliders._frWheel);
-            _flWheelTrail = CreateTireTrail(wheelColliders._flWheel);
-            _rrWheelTrail = CreateTireTrail(wheelColliders._rrWheel);
-            _rlWheelTrail = CreateTireTrail(wheelColliders._rlWheel);
+            WheelCollider[] wheelColliderArray = new WheelCollider[]
+            {
+                wheelColliders._frWheel,
+                wheelColliders._flWheel,
+                wheelColliders._rrWheel,
+                wheelColliders._rlWheel
+            };
+
             //enable trails after delay
             StartCoroutine(EnableTrailsAferDelay(2f));
-            //
-            _frWheelParticles = CreateTireParticles(wheelColliders._frWheel);
-            _flWheelParticles = CreateTireParticles(wheelColliders._flWheel);
-            _rrWheelParticles = CreateTireParticles(wheelColliders._rrWheel);
-            _rlWheelParticles = CreateTireParticles(wheelColliders._rlWheel);
-            //
-            _frSkidSound = wheelColliders._frWheel.GetComponent<AudioSource>();
-            _flSkidSound = wheelColliders._flWheel.GetComponent<AudioSource>();
-            _rrSkidSound = wheelColliders._rrWheel.GetComponent<AudioSource>();
-            _rlSkidSound = wheelColliders._rlWheel.GetComponent<AudioSource>();
+
+            foreach (var col in wheelColliderArray)
+            {
+                WheelEffects newWheelEffects;
+                newWheelEffects.WheelTrail = CreateTireTrail(col);
+                newWheelEffects.WheelParticles = CreateTireParticles(col);
+                newWheelEffects.SkidSound = col.GetComponent<AudioSource>();
+                _wheelEffectsList.Add(newWheelEffects);
+            }
         }
 
         private IEnumerator EnableTrailsAferDelay(float f)
         {
-            _frWheelTrail.emitting = false;
-            _flWheelTrail.emitting = false;
-            _rrWheelTrail.emitting = false;
-            _rlWheelTrail.emitting = false;
+            foreach (var effect in _wheelEffectsList)
+            {
+                effect.WheelTrail.emitting = false;
+            }
+
             yield return new WaitForSeconds(f);
-            _frWheelTrail.Clear();
-            _flWheelTrail.Clear();
-            _rrWheelTrail.Clear();
-            _rlWheelTrail.Clear();
-            _frWheelTrail.emitting = true;
-            _flWheelTrail.emitting = true;
-            _rrWheelTrail.emitting = true;
-            _rlWheelTrail.emitting = true;
+            foreach (var effect in _wheelEffectsList)
+            {
+                effect.WheelTrail.Clear();
+                effect.WheelTrail.emitting = true;
+            }
         }
 
         private TrailRenderer CreateTireTrail(WheelCollider wheelCollider)
@@ -96,59 +84,51 @@ namespace _Scripts.Truck
             wheelColliders._rrWheel.GetGroundHit(out wheelHits[2]);
             wheelColliders._rlWheel.GetGroundHit(out wheelHits[3]);
 
-            HandleWheelState(wheelHits[0], _frWheelParticles, _frWheelTrail, _frSkidSound);
-            HandleWheelState(wheelHits[1], _flWheelParticles, _flWheelTrail, _flSkidSound);
-            HandleWheelState(wheelHits[2], _rrWheelParticles, _rrWheelTrail, _rrSkidSound);
-            HandleWheelState(wheelHits[3], _rlWheelParticles, _rlWheelTrail, _rlSkidSound);
+            for (int i = 0; i < wheelHits.Length; i++)
+            {
+                HandleWheelState(wheelHits[i], i);
+            }
         }
 
-        private void HandleWheelState(WheelHit wheelHit, ParticleSystem wheelParticle, TrailRenderer wheelParticleTrail,
-            AudioSource
-                wheelAudioSource)
+        private void HandleWheelState(WheelHit wheelHit, int idx)
         {
             if (Mathf.Abs(wheelHit.sidewaysSlip) + Mathf.Abs(wheelHit.forwardSlip) > SlipAllowance)
             {
-                wheelParticle.Play();
-                if (!wheelAudioSource.isPlaying) wheelAudioSource.Play();
-                wheelParticleTrail.emitting = true;
-                /*
-                _photonView.RPC(nameof(PlayEffects), RpcTarget.All, true,  _photonView.ViewID);
-            */
+                _photonView.RPC(nameof(PlayEffects), RpcTarget.All, _photonView.ViewID, true, idx);
             }
             else
             {
-                wheelParticle.Stop();
-                wheelAudioSource.Stop();
-                wheelParticleTrail.emitting = false;
-                /*_photonView.RPC(nameof(PlayEffects), RpcTarget.All, false, _photonView.ViewID);*/
-
+                _photonView.RPC(nameof(PlayEffects), RpcTarget.All, _photonView.ViewID, false, idx);
             }
         }
+
         [PunRPC]
-        private void PlayEffects(bool state, int id)
+        private void PlayEffects(int id, bool isPlaying, int idx)
         {
-            if (_photonView.ViewID == id)
+            if (_photonView.ViewID != id) return;
+            var wheelEffects = _wheelEffectsList[idx];
+            if (isPlaying)
             {
-                
+                wheelEffects.WheelParticles.Play();
+                if (!wheelEffects.SkidSound.isPlaying) wheelEffects.SkidSound.Play();
+                wheelEffects.WheelTrail.emitting = true;
+            }
+            else
+            {
+                wheelEffects.WheelParticles.Stop();
+                wheelEffects.SkidSound.Stop();
+                wheelEffects.WheelTrail.emitting = false;
             }
         }
 
         public void DisableAllEffects()
         {
-            _frWheelTrail.emitting = false;
-            _flWheelTrail.emitting = false;
-            _rrWheelTrail.emitting = false;
-            _rlWheelTrail.emitting = false;
-            //
-            _frWheelParticles.Stop();
-            _flWheelParticles.Stop();
-            _rrWheelParticles.Stop();
-            _rlWheelParticles.Stop();
-            //
-            _frSkidSound.Stop();
-            _flSkidSound.Stop();
-            _rrSkidSound.Stop();
-            _rlSkidSound.Stop();
+            foreach (var effect in _wheelEffectsList)
+            {
+                effect.WheelParticles.Stop();
+                effect.SkidSound.Stop();
+                effect.WheelTrail.emitting = false;
+            }
         }
     }
 }
