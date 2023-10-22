@@ -1,11 +1,11 @@
 {
+	"CurrentTruck" : {
+		"__type" : "int",
+		"value" : 1
+	},
 	"PlayerName" : {
 		"__type" : "string",
 		"value" : "Player369"
-	},
-	"CurrentTruck" : {
-		"__type" : "int",
-		"value" : 0
 	},
 	"TruckUpgrades_1" : {
 		"__type" : "System.Collections.Generic.List`1[[System.ValueTuple`5[[_Scripts.Truck.TruckUpgradeManager+Slot, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],mscorlib",

@@ -14,6 +14,16 @@ namespace _Scripts.Truck
         private readonly List<WheelEffects> _wheelEffectsList = new();
         private const float SlipAllowance = .2f;
 
+        #region Braking
+
+        [SerializeField] private MeshRenderer _meshRenderer;
+        [SerializeField] private int _brakeMaterialIdx = 4;
+        [SerializeField] private Material _brakeOffMaterial;
+        [SerializeField] private Material _brakeOnMaterial;
+
+        #endregion
+
+
         private struct WheelEffects
         {
             public TrailRenderer WheelTrail;
@@ -129,6 +139,11 @@ namespace _Scripts.Truck
                 effect.SkidSound.Stop();
                 effect.WheelTrail.emitting = false;
             }
+        }
+
+        public void OnBrake(bool state)
+        {
+            _meshRenderer.materials[_brakeMaterialIdx] = state ? _brakeOnMaterial : _brakeOffMaterial;
         }
     }
 }

@@ -18,8 +18,8 @@ namespace _Scripts.Truck
 
     public class TruckController : MonoBehaviourPunCallbacks
     {
-        [SerializeField] private EngineAudio _engineAudio;
         [field: SerializeField] public TruckUpgradeManager UpgradeManager { get; private set; }
+        [SerializeField] private EngineAudio _engineAudio;
         [SerializeField] private TruckEffects _truckEffects;
         [SerializeField] private WheelColliders _colliders;
         [SerializeField] private WheelMeshes _wheelMeshes;
@@ -44,7 +44,6 @@ namespace _Scripts.Truck
 
         #endregion
 
-        //
         [SerializeField] private int _currentGear;
         [SerializeField] private float _speed;
         [SerializeField] private int _isEngineRunning;
@@ -59,14 +58,14 @@ namespace _Scripts.Truck
         private float _currentTorque;
         private float _clutch;
         private float _wheelRpm;
-        public PhotonView _photonView;
+        private PhotonView _photonView;
         private InputManager.InputManager _inputManager;
         public int TruckPrefabId { get; set; }
-        public bool IsForceBrake { get; private set; } = false;
+        public bool IsForceBrake { get; private set; }
 
         public WheelColliders Colliders => _colliders;
 
-        public Rigidbody PlayerRb { get; private set; }
+        private Rigidbody PlayerRb { get; set; }
 
         #region Network
 
@@ -115,10 +114,10 @@ namespace _Scripts.Truck
                 return;
             }
 
-            _speed = Colliders._rrWheel.rpm * Colliders._rrWheel.radius * 2f * Mathf.PI / 10f;
-            _speedClamped = Mathf.Lerp(_speedClamped, _speed, Time.deltaTime);
             if (_isLocalPlayer)
             {
+                _speed = Colliders._rrWheel.rpm * Colliders._rrWheel.radius * 2f * Mathf.PI / 10f;
+                _speedClamped = Mathf.Lerp(_speedClamped, _speed, Time.deltaTime);
                 CheckLocalInput();
                 ApplyMotor();
                 ApplySteering();
@@ -234,6 +233,7 @@ namespace _Scripts.Truck
             Colliders._flWheel.brakeTorque = _brakeInput * _brakePower * 0.7f;
             Colliders._rrWheel.brakeTorque = _brakeInput * _brakePower * 0.3f;
             Colliders._rlWheel.brakeTorque = _brakeInput * _brakePower * 0.3f;
+            _truckEffects.OnBrake(_brakeInput > 0);
         }
 
         private void ApplyMotor()
