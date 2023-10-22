@@ -90,7 +90,7 @@ namespace _Scripts.SceneManagement
                 return SceneType.Store;
             }
 
-            if (currentSceneName.Equals(StoreScene.ScenePath, StringComparison.Ordinal))
+            if (currentSceneName.Equals(SettingsScene.ScenePath, StringComparison.Ordinal))
             {
                 return SceneType.Settings;
             }

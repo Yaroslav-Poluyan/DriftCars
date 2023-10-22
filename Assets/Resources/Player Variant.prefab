@@ -11,6 +11,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3368355142601159819, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368355142601159819, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368355142601159819, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
+      propertyPath: ObservedComponents.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368355142601159819, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
+      propertyPath: ObservedComponents.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368355142601159819, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
+      propertyPath: ObservedComponents.Array.data[4]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3368355142601386148, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -62,6 +82,22 @@ PrefabInstance:
     - target: {fileID: 4864277166153464628, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
       propertyPath: _truckUpgrades.Array.data[1]._parts.Array.data[1]._upgradePrefabsPath
       value: Upgrades/Body_red
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384752633126951847, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
+      propertyPath: m_SynchronizeVelocity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305940215826310698, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
+      propertyPath: m_SynchronizeVelocity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740999560115330175, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
+      propertyPath: m_SynchronizeVelocity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065628863362082330, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}
+      propertyPath: m_SynchronizeVelocity
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a85e34e55fb05004aa749c9a16853d16, type: 3}

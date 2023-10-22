@@ -75,7 +75,7 @@ namespace _Scripts.InputManager
             _leftPedalImage.gameObject.SetActive(state);
             _rightPedalImage.gameObject.SetActive(state);
         }
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR
         private Vector2? _initialClickPosition = null;
         private bool _hasMovedSinceClick = false;
 #endif
@@ -83,7 +83,7 @@ namespace _Scripts.InputManager
         {
             Vertical = 1;
 
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR
             //via keyboard
             if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
             {
@@ -130,7 +130,7 @@ namespace _Scripts.InputManager
                     _rightPedalImage.sprite = _gasPedalSpritePressed;
                 }
             }
-#elif UNITY_ANDROID || UNITY_IOS
+#else
             if (Input.touches.Length > 0)
             {
                 foreach (var touch in Input.touches)

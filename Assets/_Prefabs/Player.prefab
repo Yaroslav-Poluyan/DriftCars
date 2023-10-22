@@ -102,8 +102,6 @@ GameObject:
   - component: {fileID: 3368355142601386146}
   - component: {fileID: 3368355142602188928}
   - component: {fileID: 3368355142603156032}
-  - component: {fileID: 8022436765313283490}
-  - component: {fileID: 8065628863362082330}
   m_Layer: 0
   m_Name: TireFD4
   m_TagString: Untagged
@@ -180,38 +178,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &8022436765313283490
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368355142601159810}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &8065628863362082330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368355142601159810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &3368355142601159812
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,10 +405,10 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4704998541427547783}
-  - {fileID: 8065628863362082330}
-  - {fileID: 5384752633126951847}
-  - {fileID: 7305940215826310698}
-  - {fileID: 7740999560115330175}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -473,8 +439,6 @@ GameObject:
   - component: {fileID: 3368355142601386152}
   - component: {fileID: 3368355142602188942}
   - component: {fileID: 3368355142603156046}
-  - component: {fileID: 110502737608479677}
-  - component: {fileID: 7740999560115330175}
   m_Layer: 0
   m_Name: TireRP4
   m_TagString: Untagged
@@ -551,38 +515,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &110502737608479677
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368355142601159816}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &7740999560115330175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368355142601159816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &3368355142601159820
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,8 +526,6 @@ GameObject:
   - component: {fileID: 3368355142601386156}
   - component: {fileID: 3368355142602188930}
   - component: {fileID: 3368355142603156034}
-  - component: {fileID: 7721956456842604141}
-  - component: {fileID: 5384752633126951847}
   m_Layer: 0
   m_Name: TireFP4
   m_TagString: Untagged
@@ -672,38 +602,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &7721956456842604141
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368355142601159820}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &5384752633126951847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368355142601159820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &3368355142601159822
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,8 +613,6 @@ GameObject:
   - component: {fileID: 3368355142601386158}
   - component: {fileID: 3368355142602188940}
   - component: {fileID: 3368355142603156044}
-  - component: {fileID: 6444535350243532139}
-  - component: {fileID: 7305940215826310698}
   m_Layer: 0
   m_Name: TireRD4
   m_TagString: Untagged
@@ -793,38 +689,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &6444535350243532139
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368355142601159822}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &7305940215826310698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368355142601159822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &4752568590327101684
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +796,7 @@ AudioSource:
   m_GameObject: {fileID: 4892192276348933957}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7364870744018849249, guid: a4bf0cd9a2fdd89489a48e7855dbe72d, type: 2}
   m_audioClip: {fileID: 8300000, guid: 0ff25e2fd9146a845b29c361c2491b60, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.084
@@ -1091,7 +955,7 @@ AudioSource:
   m_GameObject: {fileID: 4892192276379512699}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7364870744018849249, guid: a4bf0cd9a2fdd89489a48e7855dbe72d, type: 2}
   m_audioClip: {fileID: 8300000, guid: 0ff25e2fd9146a845b29c361c2491b60, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.084
@@ -1250,7 +1114,7 @@ AudioSource:
   m_GameObject: {fileID: 4892192276757255924}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7364870744018849249, guid: a4bf0cd9a2fdd89489a48e7855dbe72d, type: 2}
   m_audioClip: {fileID: 8300000, guid: 0ff25e2fd9146a845b29c361c2491b60, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.084
@@ -1409,7 +1273,7 @@ AudioSource:
   m_GameObject: {fileID: 4892192277851569369}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7364870744018849249, guid: a4bf0cd9a2fdd89489a48e7855dbe72d, type: 2}
   m_audioClip: {fileID: 8300000, guid: 0ff25e2fd9146a845b29c361c2491b60, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.084

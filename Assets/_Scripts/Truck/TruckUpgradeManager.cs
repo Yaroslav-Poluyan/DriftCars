@@ -139,8 +139,8 @@ namespace _Scripts.Truck
 
         public void ImplementUpgrade(Part linkedPart)
         {
-            var upgradeIndex = _truckUpgrades.FindAll(x => x._slot == linkedPart._slot).
-                SelectMany(x => x._parts).ToList().IndexOf(linkedPart);
+            var upgradeIndex = _truckUpgrades.FindAll(x => x._slot == linkedPart._slot).SelectMany(x => x._parts)
+                .ToList().IndexOf(linkedPart);
             ImplementUpgrade(linkedPart._slot, upgradeIndex);
         }
 
@@ -204,7 +204,7 @@ namespace _Scripts.Truck
                 _photonView.RPC(nameof(UpdateCarStateOnClients), RpcTarget.All, new object[] {objects},
                     _photonView.ViewID);
             }
-            else
+            else if (!PhotonNetwork.InRoom)
             {
                 UpdateCarStateOnClients(new object[] {objects}, _photonView.ViewID);
             }

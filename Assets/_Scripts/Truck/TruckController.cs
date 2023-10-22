@@ -70,6 +70,8 @@ namespace _Scripts.Truck
         #region Network
 
         private bool _isLocalPlayer;
+        private float _rearBrakeModifier = 0.7f;
+        private float _frontBrakeModifier = 0.3f;
 
         public void SetPlayerId(int playerActorNumber)
         {
@@ -157,22 +159,10 @@ namespace _Scripts.Truck
             }
         }
 
-        [PunRPC]
-        private void ReceiveInput(float gasInput, float brakeInput, float steeringInput, int viewId)
-        {
-            if (_photonView.ViewID != viewId) return;
-            _gasInput = gasInput;
-            _brakeInput = brakeInput;
-            _steeringInput = steeringInput;
-            MoveTruck();
-        }
-
         private void CheckLocalInput()
         {
             _gasInput = _inputManager.GetVerticalInput();
             _steeringInput = _inputManager.GetHorizontalInput();
-            _photonView.RPC(nameof(ReceiveInput), RpcTarget.Others, _gasInput, _brakeInput, _steeringInput,
-                _photonView.ViewID);
             MoveTruck();
         }
 
@@ -203,17 +193,15 @@ namespace _Scripts.Truck
                 _clutch = 0;
             }
 
-            if (movingDirection < -0.5f && _gasInput > 0)
+            switch (movingDirection)
             {
-                _brakeInput = Mathf.Abs(_gasInput);
-            }
-            else if (movingDirection > 0.5f && _gasInput < 0)
-            {
-                _brakeInput = Mathf.Abs(_gasInput);
-            }
-            else
-            {
-                _brakeInput = 0;
+                case < -0.5f when _gasInput > 0:
+                case > 0.5f when _gasInput < 0:
+                    _brakeInput = Mathf.Abs(_gasInput);
+                    break;
+                default:
+                    _brakeInput = 0;
+                    break;
             }
         }
 
@@ -229,10 +217,10 @@ namespace _Scripts.Truck
 
         private void ApplyBrake()
         {
-            Colliders._frWheel.brakeTorque = _brakeInput * _brakePower * 0.7f;
-            Colliders._flWheel.brakeTorque = _brakeInput * _brakePower * 0.7f;
-            Colliders._rrWheel.brakeTorque = _brakeInput * _brakePower * 0.3f;
-            Colliders._rlWheel.brakeTorque = _brakeInput * _brakePower * 0.3f;
+            Colliders._frWheel.brakeTorque = _brakeInput * _brakePower * _rearBrakeModifier;
+            Colliders._flWheel.brakeTorque = _brakeInput * _brakePower * _rearBrakeModifier;
+            Colliders._rrWheel.brakeTorque = _brakeInput * _brakePower * _frontBrakeModifier;
+            Colliders._rlWheel.brakeTorque = _brakeInput * _brakePower * _frontBrakeModifier;
             _truckEffects.OnBrake(_brakeInput > 0);
         }
 
@@ -307,6 +295,25 @@ namespace _Scripts.Truck
             UpdateWheel(Colliders._flWheel, _wheelMeshes._flWheel);
             UpdateWheel(Colliders._rrWheel, _wheelMeshes._rrWheel);
             UpdateWheel(Colliders._rlWheel, _wheelMeshes._rlWheel);
+
+            if (_isLocalPlayer)
+            {
+                _photonView.RPC(nameof(ReceiveSteering), RpcTarget.Others,
+                    _wheelMeshes._frWheel.transform.rotation,
+                    _wheelMeshes._flWheel.transform.rotation, _wheelMeshes._rrWheel.transform.rotation,
+                    _wheelMeshes._rlWheel.transform.rotation, _photonView.ViewID);
+            }
+        }
+
+        [PunRPC]
+        private void ReceiveSteering(Quaternion frSteeringAngle, Quaternion flSteeringAngle, Quaternion rrSteeringAngle,
+            Quaternion rlSteeringAngle, int viewId)
+        {
+            if (_photonView.ViewID != viewId) return;
+            _wheelMeshes._frWheel.transform.rotation = frSteeringAngle;
+            _wheelMeshes._flWheel.transform.rotation = flSteeringAngle;
+            _wheelMeshes._rrWheel.transform.rotation = rrSteeringAngle;
+            _wheelMeshes._rlWheel.transform.rotation = rlSteeringAngle;
         }
 
         private void UpdateWheel(WheelCollider coll, MeshRenderer wheelMesh)

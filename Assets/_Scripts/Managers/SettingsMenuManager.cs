@@ -15,6 +15,8 @@ namespace _Scripts.Managers
         {
             _effectsSlider.onValueChanged.AddListener(EffectsChanged);
             _musicSlider.onValueChanged.AddListener(MusicChanged);
+            _effectsSlider.value = _audioManager.GetEffectsValue();
+            _musicSlider.value = _audioManager.GetMusicValue();
         }
 
         private void MusicChanged(float value)

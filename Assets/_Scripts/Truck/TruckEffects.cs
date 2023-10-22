@@ -120,7 +120,10 @@ namespace _Scripts.Truck
             if (isPlaying)
             {
                 wheelEffects.WheelParticles.Play();
-                if (!wheelEffects.SkidSound.isPlaying) wheelEffects.SkidSound.Play();
+                if (!wheelEffects.SkidSound.isPlaying)
+                {
+                    if(wheelEffects.SkidSound.enabled) wheelEffects.SkidSound.Play();
+                }
                 wheelEffects.WheelTrail.emitting = true;
             }
             else
