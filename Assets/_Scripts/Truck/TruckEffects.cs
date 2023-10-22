@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using Photon.Pun;
+using UnityEngine;
 
 namespace _Scripts.Truck
 {
@@ -6,8 +8,8 @@ namespace _Scripts.Truck
     {
         [SerializeField] private TrailRenderer _tireTrailPrefab;
         [SerializeField] private ParticleSystem _tireParticlesPrefab;
-
         [SerializeField] private TruckController _truckController;
+        [SerializeField] private PhotonView _photonView;
 
         //
         private TrailRenderer _frWheelTrail;
@@ -39,6 +41,8 @@ namespace _Scripts.Truck
             _flWheelTrail = CreateTireTrail(wheelColliders._flWheel);
             _rrWheelTrail = CreateTireTrail(wheelColliders._rrWheel);
             _rlWheelTrail = CreateTireTrail(wheelColliders._rlWheel);
+            //enable trails after delay
+            StartCoroutine(EnableTrailsAferDelay(2f));
             //
             _frWheelParticles = CreateTireParticles(wheelColliders._frWheel);
             _flWheelParticles = CreateTireParticles(wheelColliders._flWheel);
@@ -49,6 +53,23 @@ namespace _Scripts.Truck
             _flSkidSound = wheelColliders._flWheel.GetComponent<AudioSource>();
             _rrSkidSound = wheelColliders._rrWheel.GetComponent<AudioSource>();
             _rlSkidSound = wheelColliders._rlWheel.GetComponent<AudioSource>();
+        }
+
+        private IEnumerator EnableTrailsAferDelay(float f)
+        {
+            _frWheelTrail.emitting = false;
+            _flWheelTrail.emitting = false;
+            _rrWheelTrail.emitting = false;
+            _rlWheelTrail.emitting = false;
+            yield return new WaitForSeconds(f);
+            _frWheelTrail.Clear();
+            _flWheelTrail.Clear();
+            _rrWheelTrail.Clear();
+            _rlWheelTrail.Clear();
+            _frWheelTrail.emitting = true;
+            _flWheelTrail.emitting = true;
+            _rrWheelTrail.emitting = true;
+            _rlWheelTrail.emitting = true;
         }
 
         private TrailRenderer CreateTireTrail(WheelCollider wheelCollider)
@@ -90,12 +111,25 @@ namespace _Scripts.Truck
                 wheelParticle.Play();
                 if (!wheelAudioSource.isPlaying) wheelAudioSource.Play();
                 wheelParticleTrail.emitting = true;
+                /*
+                _photonView.RPC(nameof(PlayEffects), RpcTarget.All, true,  _photonView.ViewID);
+            */
             }
             else
             {
                 wheelParticle.Stop();
                 wheelAudioSource.Stop();
                 wheelParticleTrail.emitting = false;
+                /*_photonView.RPC(nameof(PlayEffects), RpcTarget.All, false, _photonView.ViewID);*/
+
+            }
+        }
+        [PunRPC]
+        private void PlayEffects(bool state, int id)
+        {
+            if (_photonView.ViewID == id)
+            {
+                
             }
         }
 

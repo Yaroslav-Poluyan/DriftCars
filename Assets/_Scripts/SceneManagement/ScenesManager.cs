@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,6 +24,7 @@ namespace _Scripts.SceneManagement
             MainMenu = 4,
             Garage = 5,
             Store = 6,
+            Level = 7
         }
 
         public void LoadScene(SceneType sceneType)
@@ -49,6 +51,51 @@ namespace _Scripts.SceneManagement
         public string GetLevelPath(int levelIdx)
         {
             return Levels[levelIdx].ScenePath;
+        }
+
+        public SceneType GetCurrentSceneType()
+        {
+            var currentSceneName = SceneManager.GetActiveScene().path;
+
+            if (currentSceneName.Equals(InitialScene.ScenePath, StringComparison.Ordinal))
+            {
+                return SceneType.Initial;
+            }
+
+            if (currentSceneName.Equals(ConnectScene.ScenePath, StringComparison.Ordinal))
+            {
+                return SceneType.Connect;
+            }
+
+            if (currentSceneName.Equals(LobbyScene.ScenePath, StringComparison.Ordinal))
+            {
+                return SceneType.Lobby;
+            }
+
+            if (currentSceneName.Equals(MainMenuScene.ScenePath, StringComparison.Ordinal))
+            {
+                return SceneType.MainMenu;
+            }
+
+            if (currentSceneName.Equals(GarageScene.ScenePath, StringComparison.Ordinal))
+            {
+                return SceneType.Garage;
+            }
+
+            if (currentSceneName.Equals(StoreScene.ScenePath, StringComparison.Ordinal))
+            {
+                return SceneType.Store;
+            }
+
+            for (int i = 0; i < Levels.Count; i++)
+            {
+                if (currentSceneName.Equals(Levels[i].ScenePath, StringComparison.Ordinal))
+                {
+                    return SceneType.Level;
+                }
+            }
+
+            throw new InvalidOperationException($"Unknown scene name: {currentSceneName}");
         }
     }
 }

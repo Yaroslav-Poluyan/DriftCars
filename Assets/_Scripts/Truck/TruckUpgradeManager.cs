@@ -44,13 +44,6 @@ namespace _Scripts.Truck
 
         private void Start()
         {
-#if UNITY_EDITOR
-            //set directory of saved data to Resources folder
-            ES3Settings.defaultSettings.path = @"C:\Work\UnityProjects\DriftCars\Assets\Resources\savedata.json";
-#else
-            ES3Settings.defaultSettings.path = Application.persistentDataPath + "/savedata.json";
-#endif
-            //Debug.LogError("Save path: " + ES3Settings.defaultSettings.path);
             if (!PhotonNetwork.InRoom) LoadAllUpgrades();
         }
 

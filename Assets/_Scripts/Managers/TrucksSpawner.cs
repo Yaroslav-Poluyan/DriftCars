@@ -88,6 +88,10 @@ namespace _Scripts.Managers
             {
                 _cameraController.AssignCameraToTruck(controller);
             }
+            else
+            {
+                controller.DisableAllPhysics();
+            }
 
             // Inform the server about truck creation from all clients
             photonView.RPC(nameof(InformServerAboutTruckCreation), RpcTarget.MasterClient, playerID, truckViewID);

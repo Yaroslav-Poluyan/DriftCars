@@ -20,6 +20,7 @@ namespace _Scripts.Network
         {
             PhotonNetwork.GameVersion = _gameVersion;
             PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.SerializationRate = 30;
             if (Application.internetReachability == NetworkReachability.NotReachable) PhotonNetwork.OfflineMode = true;
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.ConnectToRegion(_region);

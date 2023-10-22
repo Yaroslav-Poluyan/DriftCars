@@ -5,14 +5,15 @@ namespace _Scripts.InputManager
 {
     public class InputManager : MonoBehaviour
     {
+        [SerializeField] private TouchPad _touchPad;
         public float GetHorizontalInput()
         {
-            return Input.GetAxis("Horizontal");
+            return _touchPad.GetHorizontalInput();
         }
 
         public float GetVerticalInput()
         {
-            return Input.GetAxis("Vertical");
+            return _touchPad.GetVerticalInput();
         }
     }
 }

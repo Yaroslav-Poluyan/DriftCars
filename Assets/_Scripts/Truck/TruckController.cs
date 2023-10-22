@@ -117,13 +117,16 @@ namespace _Scripts.Truck
 
             _speed = Colliders._rrWheel.rpm * Colliders._rrWheel.radius * 2f * Mathf.PI / 10f;
             _speedClamped = Mathf.Lerp(_speedClamped, _speed, Time.deltaTime);
-            CheckLocalInput();
-            ApplyMotor();
-            ApplySteering();
-            ApplyBrake();
-            CheckDrift();
-            _truckEffects.CheckParticles();
-            ApplyWheelPositions();
+            if (_isLocalPlayer)
+            {
+                CheckLocalInput();
+                ApplyMotor();
+                ApplySteering();
+                ApplyBrake();
+                CheckDrift();
+                ApplyWheelPositions();
+                _truckEffects.CheckParticles();
+            }
         }
 
         private void ForceBreak()
@@ -156,8 +159,9 @@ namespace _Scripts.Truck
         }
 
         [PunRPC]
-        private void ReceiveInput(float gasInput, float brakeInput, float steeringInput)
+        private void ReceiveInput(float gasInput, float brakeInput, float steeringInput, int viewId)
         {
+            if (_photonView.ViewID != viewId) return;
             _gasInput = gasInput;
             _brakeInput = brakeInput;
             _steeringInput = steeringInput;
@@ -166,14 +170,10 @@ namespace _Scripts.Truck
 
         private void CheckLocalInput()
         {
-            if (!_isLocalPlayer)
-            {
-                return;
-            }
-
             _gasInput = _inputManager.GetVerticalInput();
             _steeringInput = _inputManager.GetHorizontalInput();
-            _photonView.RPC(nameof(ReceiveInput), RpcTarget.Others, _gasInput, _brakeInput, _steeringInput);
+            _photonView.RPC(nameof(ReceiveInput), RpcTarget.Others, _gasInput, _brakeInput, _steeringInput,
+                _photonView.ViewID);
             MoveTruck();
         }
 
@@ -360,6 +360,16 @@ namespace _Scripts.Truck
             if (_gearState != GearState.Neutral)
                 _gearState = GearState.Running;
         }
+
+        public void DisableAllPhysics()
+        {
+            PlayerRb.isKinematic = true;
+            PlayerRb.useGravity = false;
+            Colliders._frWheel.gameObject.SetActive(false);
+            Colliders._flWheel.gameObject.SetActive(false);
+            Colliders._rrWheel.gameObject.SetActive(false);
+            Colliders._rlWheel.gameObject.SetActive(false);
+        }
     }
 
     [Serializable]
@@ -378,19 +388,5 @@ namespace _Scripts.Truck
         public MeshRenderer _flWheel;
         public MeshRenderer _rrWheel;
         public MeshRenderer _rlWheel;
-    }
-
-    [Serializable]
-    public class WheelParticles
-    {
-        public ParticleSystem _frWheel;
-        public ParticleSystem _flWheel;
-        public ParticleSystem _rrWheel;
-        public ParticleSystem _rlWheel;
-
-        public TrailRenderer _frWheelTrail;
-        public TrailRenderer _flWheelTrail;
-        public TrailRenderer _rrWheelTrail;
-        public TrailRenderer _rlWheelTrail;
     }
 }
