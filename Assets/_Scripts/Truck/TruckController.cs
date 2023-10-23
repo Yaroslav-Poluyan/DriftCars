@@ -127,6 +127,7 @@ namespace _Scripts.Truck
                 CheckDrift();
                 ApplyWheelPositions();
                 _truckEffects.CheckParticles();
+                _truckEffects.OnBrake(_brakeInput > 0 || _gasInput < 0);
             }
         }
 
@@ -221,7 +222,6 @@ namespace _Scripts.Truck
             Colliders._flWheel.brakeTorque = _brakeInput * _brakePower * _rearBrakeModifier;
             Colliders._rrWheel.brakeTorque = _brakeInput * _brakePower * _frontBrakeModifier;
             Colliders._rlWheel.brakeTorque = _brakeInput * _brakePower * _frontBrakeModifier;
-            _truckEffects.OnBrake(_brakeInput > 0);
         }
 
         private void ApplyMotor()

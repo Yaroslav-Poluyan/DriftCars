@@ -23,6 +23,7 @@ namespace _Scripts.Truck
 
         #endregion
 
+        private bool _isBraking;
 
         private struct WheelEffects
         {
@@ -122,8 +123,9 @@ namespace _Scripts.Truck
                 wheelEffects.WheelParticles.Play();
                 if (!wheelEffects.SkidSound.isPlaying)
                 {
-                    if(wheelEffects.SkidSound.enabled) wheelEffects.SkidSound.Play();
+                    if (wheelEffects.SkidSound.enabled) wheelEffects.SkidSound.Play();
                 }
+
                 wheelEffects.WheelTrail.emitting = true;
             }
             else
@@ -146,7 +148,11 @@ namespace _Scripts.Truck
 
         public void OnBrake(bool state)
         {
-            _meshRenderer.materials[_brakeMaterialIdx] = state ? _brakeOnMaterial : _brakeOffMaterial;
+            if (_isBraking == state) return;
+            var materials = _meshRenderer.materials;
+            materials[_brakeMaterialIdx] = state ? _brakeOnMaterial : _brakeOffMaterial;
+            _meshRenderer.materials = materials;
+            _isBraking = state;
         }
     }
 }
