@@ -299,9 +299,9 @@ namespace _Scripts.Truck
             if (_isLocalPlayer)
             {
                 _photonView.RPC(nameof(ReceiveSteering), RpcTarget.Others,
-                    _wheelMeshes._frWheel.transform.rotation,
-                    _wheelMeshes._flWheel.transform.rotation, _wheelMeshes._rrWheel.transform.rotation,
-                    _wheelMeshes._rlWheel.transform.rotation, _photonView.ViewID);
+                    _wheelMeshes._frWheel.transform.localRotation,
+                    _wheelMeshes._flWheel.transform.localRotation, _wheelMeshes._rrWheel.transform.localRotation,
+                    _wheelMeshes._rlWheel.transform.localRotation, _photonView.ViewID);
             }
         }
 
@@ -310,10 +310,10 @@ namespace _Scripts.Truck
             Quaternion rlSteeringAngle, int viewId)
         {
             if (_photonView.ViewID != viewId) return;
-            _wheelMeshes._frWheel.transform.rotation = frSteeringAngle;
-            _wheelMeshes._flWheel.transform.rotation = flSteeringAngle;
-            _wheelMeshes._rrWheel.transform.rotation = rrSteeringAngle;
-            _wheelMeshes._rlWheel.transform.rotation = rlSteeringAngle;
+            _wheelMeshes._frWheel.transform.localRotation = frSteeringAngle;
+            _wheelMeshes._flWheel.transform.localRotation = flSteeringAngle;
+            _wheelMeshes._rrWheel.transform.localRotation = rrSteeringAngle;
+            _wheelMeshes._rlWheel.transform.localRotation = rlSteeringAngle;
         }
 
         private void UpdateWheel(WheelCollider coll, MeshRenderer wheelMesh)
